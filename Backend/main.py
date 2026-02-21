@@ -1,8 +1,11 @@
+from ai.router import router as ai_router
 from fastapi import FastAPI, HTTPException
 from models import UserRegister, UserLogin
 from auth import create_user, authenticate_user
 
 app = FastAPI()
+
+app.include_router(ai_router)
 
 @app.post("/register")
 def register_user(data: UserRegister):
