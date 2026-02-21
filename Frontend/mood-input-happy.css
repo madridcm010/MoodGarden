@@ -1,0 +1,278 @@
+.mood-input-happy-container1 {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+ 
+.mood-input-happy-thq-mood-input-happy-elm {
+  gap: 16px;
+  width: 100%;
+  height: 1024px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-size: cover;
+  background-image: url("public/tq_98xjypwm2z-pnkq-1100h.png");
+}
+ 
+.mood-input-happy-thq-frame1-elm {
+  gap: 24px;
+  top: 110px;
+  left: 643px;
+  width: 150px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+}
+ 
+.mood-input-happy-thq-happybutton-elm {
+  gap: 10px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  padding: 10px;
+  overflow: hidden;
+  align-items: center;
+  flex-shrink: 0;
+  border-color: rgba(159, 111, 71, 1);
+  border-style: solid;
+  border-width: 7px;
+  border-radius: 24px;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(250, 250, 247, 0.5);
+}
+ 
+.mood-input-happy-thq-text-elm1 {
+  color: rgb(0, 0, 0);
+  width: 144px;
+  height: auto;
+  font-size: 48px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 40px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.mood-input-happy-text1 {
+  color: #000000;
+}
+ 
+.mood-input-happy-text3 {
+  color: #9f6f47;
+  font-size: 32px;
+}
+ 
+.mood-input-happy-thq-emotion-intensity-slidernew-elm {
+  top: 367px;
+  left: 274px;
+  width: 892px;
+  height: 157px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+ 
+.mood-input-happy-thq-rectangle12-elm {
+  top: 20.517045974731445px;
+  left: 28px;
+  width: 837px;
+  height: 62px;
+  position: absolute;
+  border-color: rgba(250, 250, 247, 1);
+  border-style: solid;
+  border-width: 10px;
+  border-radius: 15px;
+}
+ 
+.mood-input-happy-thq-ellipse6-elm {
+  top: -7.136363506317139px;
+  left: 0px;
+  width: 115px;
+  height: 103px;
+  position: absolute;
+}
+ 
+.mood-input-happy-thq-text-elm2 {
+  top: 95.44886016845703px;
+  color: rgba(250, 250, 247, 1);
+  width: 87px;
+  height: auto;
+  position: absolute;
+  font-size: 45px;
+  font-style: Bold;
+  text-align: left;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 66px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.mood-input-happy-thq-text-elm3 {
+  top: 91.88068389892578px;
+  left: 775px;
+  color: rgba(250, 250, 247, 1);
+  width: 117px;
+  height: auto;
+  position: absolute;
+  font-size: 45px;
+  font-style: Bold;
+  text-align: left;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 66px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.mood-input-happy-thq-text-elm4 {
+  top: 95.44886016845703px;
+  left: 369px;
+  color: rgba(250, 250, 247, 1);
+  width: 155px;
+  height: auto;
+  position: absolute;
+  font-size: 45px;
+  font-style: Bold;
+  text-align: left;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 66px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.mood-input-happy-thq-text-input-default-elm {
+  gap: 10px;
+  top: 562px;
+  left: 289px;
+  width: 862px;
+  display: flex;
+  padding: 16px;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+ 
+.mood-input-happy-thq-text-elm5 {
+  color: rgba(159, 111, 71, 1);
+  width: 680px;
+  height: auto;
+  font-size: 30px;
+  font-style: Bold;
+  text-align: left;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 66px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.mood-input-happy-thq-rectangle16-elm {
+  width: auto;
+  height: 262px;
+  align-self: stretch;
+  border-radius: 16px;
+}
+ 
+.mood-input-happy-thq-text-elm6 {
+  top: 302px;
+  left: 520px;
+  color: rgba(159, 111, 71, 1);
+  width: 399px;
+  height: auto;
+  position: absolute;
+  font-size: 30px;
+  font-style: Bold;
+  text-align: left;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 66px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.mood-input-happy-thq-nextnavigatestorec-elm {
+  top: 916px;
+  left: 627px;
+  width: 188px;
+  height: 63px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+ 
+.mood-input-happy-thq-rectangle17-elm {
+  top: 0px;
+  left: 0px;
+  width: 188px;
+  height: 63px;
+  position: absolute;
+  border-radius: 16px;
+}
+ 
+.mood-input-happy-thq-text-elm7 {
+  top: 16px;
+  left: 19px;
+  color: rgba(255, 255, 255, 1);
+  width: 148px;
+  height: auto;
+  position: absolute;
+  font-size: 40px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 40px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.mood-input-happy-link {
+  display: contents;
+}
+ 
+.mood-input-happy-container2 {
+  right: 50px;
+  border: 1px solid #ffffff5c;
+  bottom: 30px;
+  display: flex;
+  z-index: 22;
+  position: fixed;
+  box-shadow: 5px 5px 10px 0px rgba(31, 31, 31, 0.4);
+  min-height: auto;
+  align-items: center;
+  padding-top: 8px;
+  padding-left: 12px;
+  border-radius: 8px;
+  padding-right: 12px;
+  padding-bottom: 8px;
+  backdrop-filter: blur(6px);
+  background-color: rgba(41, 41, 41, 0.41);
+}
+ 
+.mood-input-happy-icon1 {
+  width: 24px;
+  margin-right: 4px;
+}
+ 
+.mood-input-happy-text4 {
+  color: white;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}

@@ -1,0 +1,206 @@
+.login-page-container1 {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+ 
+.login-page-thq-login-page-elm {
+  width: 100%;
+  height: 1024px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-size: cover;
+  background-image: url("public/tq_-jv_yx4ssv-upi8-1100h.png");
+}
+ 
+.login-page-thq-rectangle2-elm {
+  top: 214px;
+  left: 291px;
+  width: 858px;
+  height: 596px;
+  position: absolute;
+}
+ 
+.login-page-thq-text-elm1 {
+  top: 287px;
+  left: 409px;
+  color: rgba(159, 111, 71, 1);
+  height: auto;
+  position: absolute;
+  font-size: 25px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 90px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.login-page-thq-new-user-toregisterclickhere-elm {
+  top: 629px;
+  left: 499px;
+  width: 441px;
+  height: 90px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+ 
+.login-page-thq-text-elm2 {
+  color: rgba(159, 111, 71, 1);
+  height: auto;
+  position: absolute;
+  font-size: 25px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 90px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.login-page-thq-text-elm3 {
+  top: 719px;
+  left: 596px;
+  color: rgba(159, 111, 71, 1);
+  height: auto;
+  position: absolute;
+  font-size: 25px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 40px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.login-page-thq-text-elm6 {
+  top: 419px;
+  left: 409px;
+  color: rgba(159, 111, 71, 1);
+  height: auto;
+  position: absolute;
+  font-size: 25px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 90px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.login-page-thq-text-elm7 {
+  top: 231px;
+  left: 534px;
+  color: rgba(159, 111, 71, 1);
+  height: auto;
+  position: absolute;
+  font-size: 45px;
+  font-style: ExtraBold;
+  text-align: center;
+  font-family: Outfit;
+  font-weight: 800;
+  line-height: 90px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.login-page-thq-rectangle4-elm {
+  top: 360px;
+  left: 409px;
+  width: 622px;
+  height: 59px;
+  position: absolute;
+  border-radius: 15px;
+}
+ 
+.login-page-thq-rectangle5-elm {
+  top: 494px;
+  left: 408px;
+  width: 622px;
+  height: 59px;
+  position: absolute;
+  border-radius: 15px;
+}
+ 
+.login-page-thq-loginbutton-elm {
+  top: 555px;
+  left: 640px;
+  width: 160px;
+  height: 90px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+ 
+.login-page-thq-rectangle6-elm {
+  top: 15px;
+  left: 0px;
+  width: 160px;
+  height: 59px;
+  position: absolute;
+  border-radius: 15px;
+}
+ 
+.login-page-thq-text-elm8 {
+  left: 37px;
+  color: rgba(250, 250, 247, 1);
+  height: auto;
+  position: absolute;
+  font-size: 25px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Outfit;
+  font-weight: 700;
+  line-height: 90px;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.login-page-link {
+  display: contents;
+}
+ 
+.login-page-container2 {
+  right: 50px;
+  border: 1px solid #ffffff5c;
+  bottom: 30px;
+  display: flex;
+  z-index: 22;
+  position: fixed;
+  box-shadow: 5px 5px 10px 0px rgba(31, 31, 31, 0.4);
+  min-height: auto;
+  align-items: center;
+  padding-top: 8px;
+  padding-left: 12px;
+  border-radius: 8px;
+  padding-right: 12px;
+  padding-bottom: 8px;
+  backdrop-filter: blur(6px);
+  background-color: rgba(41, 41, 41, 0.41);
+}
+ 
+.login-page-icon1 {
+  width: 24px;
+  margin-right: 4px;
+}
+ 
+.login-page-text2 {
+  color: white;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
