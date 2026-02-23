@@ -1,2 +1,7 @@
 transformers
 torch
+passlib.context
+fastapi
+pydantic
+uvicorn
+venv
