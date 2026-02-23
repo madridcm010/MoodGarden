@@ -19,4 +19,6 @@ def login_user(data: UserLogin):
     authenticated = authenticate_user(data.username, data.password)
     if not authenticated:
         raise HTTPException(status_code=401, detail="Invalid username or password")
-    return {"message": "Login successful"}
+    return {"message": "Login successful",
+    "Authenticated":True
+    }

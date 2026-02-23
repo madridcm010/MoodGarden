@@ -3,31 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <link rel="stylesheet" href="lgn-page.css">
 </head>
 <body>
     
-    <div class="login-page">
-      <div class="login-container">
-    
-        <h1 class="welcome">Welcome Back!</h1>
-    
-        <label class="label">Email:</label>
-        <input type="email" class="input-box" required>
-    
-        <label class="label">Password:</label>
-        <input type="password" class="input-box" required>
-    
-        <button class="login-btn">Log in</button>
-    
-        <div class="links">
-          <a href="#">New User? To register click here</a>
-          <a href="#">Forgot email? Forgot password?</a>
-        </div>
-    
-      </div>
+   <div class="login-page">
+  <div class="login-container">
+
+    <h1 class="welcome">Welcome Back!</h1>
+
+    <label class="label">Email:</label>
+    <input type="email" id="email" class="input-box" required>
+
+    <label class="label">Password:</label>
+    <input type="password" id="password" class="input-box" required>
+
+    <button class="login-btn" id="loginBtn">Log in</button>
+
+    <div class="links">
+      <a href="signup.html">New User? To register click here</a>
+      <a href="#">Forgot email? Forgot password?</a>
     </div>
+
+  </div>
+</div>
+
+<script>
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      alert("Please enter email and password");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: email,
+          password: password
+        })
+      });
+
+      if (!res.ok) {
+        alert("Invalid login credentials");
+        return;
+      }
+
+      // demo auth state for keeping "loggedin    "
+      localStorage.setItem("loggedIn", "true");
+
+      // redirect to reccomendations on 200 code
+      window.location.href = "recommendations.html";
+
+    } catch (err) {
+      alert("Server error. Is FastAPI running?");
+    }
+  });
+</script>
+
 </body>
 </html>
 

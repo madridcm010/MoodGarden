@@ -1,7 +1,6 @@
 transformers
 torch
-passlib.context
+passlib[argon2]
 fastapi
 pydantic
-uvicorn
-venv
+uvicorn[standard]
