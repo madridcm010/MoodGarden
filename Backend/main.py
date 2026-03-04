@@ -2,6 +2,7 @@ from ai.router import router as ai_router
 from fastapi import FastAPI, HTTPException, APIRouter
 from models import UserRegister, UserLogin
 from auth import create_user, authenticate_user
+from .database import engine
 
 app = FastAPI()
 
