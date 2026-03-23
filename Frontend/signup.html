@@ -1,45 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
-<body>
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Create Account</title>
   <link rel="stylesheet" href="signup.css" />
 </head>
 
 <body>
   <div class="signup-page">
-    <form class="signup-card">
+    <form class="signup-card" id="signupForm">
       <h1>Create Your Mood Garden</h1>
 
       <label>
         Name (optional)
-        <input type="text" />
+        <input type="text" id="name" />
       </label>
 
       <label>
         Email
-        <input type="email" required />
+        <input type="email" id="signupEmail" required />
       </label>
 
       <label>
         Password (minimum of 8 characters)
-        <input type="password" minlength="8" required />
+        <input type="password" id="signupPassword" minlength="8" required />
       </label>
 
       <label>
         Confirm Password
-        <input type="password" minlength="8" required />
+        <input type="password" id="confirmPassword" minlength="8" required />
       </label>
 
       <p class="login-text">Already have an account?</p>
@@ -51,8 +41,7 @@
       </p>
     </form>
   </div>
-</body>
-</html>
-</body>
 
+  <script src="js/auth.js"></script>
+</body>
 </html>
