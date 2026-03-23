@@ -1,11 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    // Login button
     const authBtn = document.getElementById("authBtn");
-
     if (authBtn) {
         authBtn.addEventListener("click", function () {
-            console.log("Navigating to login page...");
             window.location.href = "lgn-page.html";
+        });
+    }
+
+    // Start growing button
+    const startBtn = document.getElementById("startGrowingBtn");
+    if (startBtn) {
+        startBtn.addEventListener("click", function () {
+            window.location.href = "dashboard.html";
         });
     }
 
