@@ -1,18 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
-<body>
- <!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Recommendations</title>
   <link rel="stylesheet" href="recommendations.css" />
 </head>
@@ -26,25 +16,24 @@
     <main class="content">
       <h2 class="section-title">Helpful quote</h2>
 
-      <section class="card">
-        <!-- quote content goes here -->
-      </section>
+      <section class="card" id="quoteCard"></section>
 
       <div class="row">
         <h3 class="sub-title">Tips</h3>
-        <section class="card"></section>
+        <section class="card" id="tipsCard"></section>
       </div>
 
       <div class="row">
         <h3 class="sub-title">Recommended Action:</h3>
-        <section class="card"></section>
+        <section class="card" id="actionCard"></section>
       </div>
 
-      <button class="cta-btn">Want to log more?</button>
+      <button id="logMoreBtn" class="cta-btn">Want to log more?</button>
     </main>
   </div>
-</body>
-</html>
-</body>
 
+  <!-- IMPORTANT: JS FILES -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
 </html>
