@@ -18,10 +18,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // ================= LOG MORE BUTTON (Recommendations Page) =================
+    const logMoreBtn = document.getElementById("logMoreBtn");
+
+    if (logMoreBtn) {
+        logMoreBtn.addEventListener("click", function () {
+            window.location.href = "dashboard.html"; // or mood logging page
+        });
+    }
+
     // ================= CHECK LOGIN STATUS =================
     const isLoggedIn = localStorage.getItem("loggedIn");
 
-    // Example: you can use this later to protect pages
-    console.log("User logged in:", isLoggedIn);
+    if (!isLoggedIn && window.location.pathname.includes("recommendations.html")) {
+        alert("Please log in first");
+        window.location.href = "lgn-page.html";
+    }
 
 });
