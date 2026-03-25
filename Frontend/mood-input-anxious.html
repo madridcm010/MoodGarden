@@ -376,7 +376,7 @@
       <div class="mood-input-anxious-container1">
         <div class="mood-input-anxious-thq-mood-input-anxious-elm">
           <div class="mood-input-anxious-thq-frame1-elm">
-            <button class="mood-input-anxious-thq-emotionbutton-elm">
+            <button id="anxiousMoodBtn" class="mood-input-anxious-thq-emotionbutton-elm">
               <span class="mood-input-anxious-thq-text-elm1">
                 <span class="mood-input-anxious-text1">😰</span>
                 <br />
@@ -401,7 +401,7 @@
           </div>
           <div class="mood-input-anxious-thq-text-input-default-elm">
             <span class="mood-input-anxious-thq-text-elm5">
-              Would you like to share more?
+        <textarea id="moodNote" placeholder="Share more..."></textarea>           
             </span>
             <img
               src="public/rectangle16i377-2i8-300h.png"
@@ -415,7 +415,7 @@
               alt="Rectangle17I379"
               class="mood-input-anxious-thq-rectangle17-elm"
             />
-            <span class="mood-input-anxious-thq-text-elm6">Next &gt;&gt;</span>
+              <button id="nextBtn">Next >></button>         
           </div>
         </div>
         <a
@@ -456,5 +456,7 @@
         href="https://flux-figma-build-tutorial-starter-community-m8xe2m.teleporthq.app/mood-input-anxious"
       />
     </div>
-  </body>
+  <script src="js/api.js"></script>
+  <script src="js/mood.js"></script>
+</body>
 </html>
