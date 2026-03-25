@@ -376,7 +376,7 @@
       <div class="mood-input-sad-container1">
         <div class="mood-input-sad-thq-mood-input-sad-elm">
           <div class="mood-input-sad-thq-frame1-elm">
-            <button class="mood-input-sad-thq-emotionbutton-elm">
+            <button id="sadMoodBtn" class="mood-input-sad-thq-emotionbutton-elm">
               <span class="mood-input-sad-thq-text-elm1">
                 <span class="mood-input-sad-text1">😢</span>
                 <br />
@@ -401,7 +401,7 @@
           </div>
           <div class="mood-input-sad-thq-text-input-default-elm">
             <span class="mood-input-sad-thq-text-elm5">
-              Would you like to share more?
+            <textarea id="moodNote" placeholder="Share more..."></textarea>
             </span>
             <img
               src="public/rectangle16i377-zma8-300h.png"
@@ -415,7 +415,7 @@
               alt="Rectangle17I379"
               class="mood-input-sad-thq-rectangle17-elm"
             />
-            <span class="mood-input-sad-thq-text-elm6">Next &gt;&gt;</span>
+            <button id="nextBtn">Next >></button>
           </div>
         </div>
         <a href="https://play.teleporthq.io/signup" class="mood-input-sad-link">
@@ -453,5 +453,7 @@
         href="https://flux-figma-build-tutorial-starter-community-m8xe2m.teleporthq.app/mood-input-sad"
       />
     </div>
+    <script src="js/api.js"></script>
+    <script src="js/mood.js"></script>
   </body>
 </html>
