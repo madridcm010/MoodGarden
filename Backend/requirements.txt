@@ -4,3 +4,4 @@ passlib[argon2]
 fastapi
 pydantic
 uvicorn[standard]
+sqlalchemy psycopg2-binary

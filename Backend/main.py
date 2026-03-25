@@ -22,3 +22,14 @@ def login_user(data: UserLogin):
     return {"message": "Login successful",
     "Authenticated":True
     }
+from fastapi import Depends
+from sqlalchemy.orm import Session
+from database import get_db
+
+@app.get("/test-db")
+def test_db(db: Session = Depends(get_db)):
+    try:
+        db.execute("SELECT 1")
+        return {"connected": True}
+    except Exception as e:
+        return {"connected": False, "error": str(e)}
