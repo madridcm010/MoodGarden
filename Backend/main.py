@@ -1,30 +1,35 @@
 from ai.router import router as ai_router
 from fastapi import FastAPI, HTTPException, APIRouter
-from models import UserRegister, UserLogin
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from database import get_db
+from crud import create_user, get_user_by_username
+from auth import verify_password
+from schemas import UserRegister, UserLogin, UserProfile
 from auth import create_user, authenticate_user
+from models import User
 
 app = FastAPI()
 
 app.include_router(ai_router)
 
-@app.post("/register")
-def register_user(data: UserRegister):
-    success = create_user(data.username, data.password)
-    if not success:
-        raise HTTPException(status_code=400, detail="Username already exists")
-    return {"message": "User registered successfully"}
+router = APIRouter(prefix="/auth")
 
-@app.post("/login")
-def login_user(data: UserLogin):
-    authenticated = authenticate_user(data.username, data.password)
-    if not authenticated:
+@router.post("/register", response_model=UserProfile)
+def register(data: UserRegister, db: Session = Depends(get_db)):
+    if get_user_by_username(db, data.username):
+        raise HTTPException(status_code=400, detail="Username already exists")
+
+    user = create_user(db, data.username, data.email, data.password)
+    return user
+
+@router.post("/login")
+def login(data: UserLogin, db: Session = Depends(get_db)):
+    user = get_user_by_username(db, data.username)
+    if not user or not verify_password(data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid username or password")
-    return {"message": "Login successful",
-    "Authenticated":True
-    }
-from fastapi import Depends
-from sqlalchemy.orm import Session
-from database import get_db
+
+    return {"message": "Login successful", "user_id": user.id}
 
 @app.get("/test-db")
 def test_db(db: Session = Depends(get_db)):
