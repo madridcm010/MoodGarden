@@ -2,6 +2,7 @@ from ai.router import router as ai_router
 from fastapi import FastAPI, HTTPException, APIRouter
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from database import get_db
 from crud import create_user, get_user_by_username
 from auth import verify_password
@@ -11,6 +12,7 @@ from models import User
 
 app = FastAPI()
 
+from models import User
 app.include_router(ai_router)
 
 router = APIRouter(prefix="/auth")
@@ -34,7 +36,7 @@ def login(data: UserLogin, db: Session = Depends(get_db)):
 @app.get("/test-db")
 def test_db(db: Session = Depends(get_db)):
     try:
-        db.execute("SELECT 1")
+        db.execute(text("SELECT 1"))
         return {"connected": True}
     except Exception as e:
         return {"connected": False, "error": str(e)}
