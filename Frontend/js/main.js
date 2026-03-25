@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ================= AUTH BUTTON (Landing Page) =================
+    // ================= LANDING PAGE =================
     const authBtn = document.getElementById("authBtn");
 
     if (authBtn) {
@@ -9,28 +9,38 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ================= START GROWING BUTTON =================
     const startBtn = document.getElementById("startGrowingBtn");
 
     if (startBtn) {
         startBtn.addEventListener("click", function () {
-            window.location.href = "dashboard.html";
+            window.location.href = "mood-input-happy.html";
         });
     }
 
-    // ================= LOG MORE BUTTON (Recommendations Page) =================
+    // ================= RECOMMENDATIONS PAGE =================
     const logMoreBtn = document.getElementById("logMoreBtn");
 
     if (logMoreBtn) {
         logMoreBtn.addEventListener("click", function () {
-            window.location.href = "dashboard.html"; // or mood logging page
+            window.location.href = "mood-input-happy.html";
         });
     }
 
-    // ================= CHECK LOGIN STATUS =================
+    // ================= PROTECT PAGES =================
     const isLoggedIn = localStorage.getItem("loggedIn");
 
-    if (!isLoggedIn && window.location.pathname.includes("recommendations.html")) {
+    const protectedPages = [
+        "recommendations.html",
+        "mood-input-happy.html",
+        "mood-input-sad.html",
+        "mood-input-angry.html",
+        "mood-input-anxious.html",
+        "mood-input-calm.html"
+    ];
+
+    const currentPage = window.location.pathname.split("/").pop();
+
+    if (protectedPages.includes(currentPage) && !isLoggedIn) {
         alert("Please log in first");
         window.location.href = "lgn-page.html";
     }
