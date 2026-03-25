@@ -1,7 +1,9 @@
+/* Body and login layout (existing) */
 body {
   margin: 0;
   font-family: Outfit, sans-serif;
   background-color: #87ae73;
+  position: relative; /* for positioning header */
 }
 
 .login-page {
@@ -74,4 +76,20 @@ body {
   font-weight: 700;
   margin-top: 10px;
   text-decoration: none;
+}
+
+/* New: MoodGarden header link */
+.moodgarden {
+  position: absolute; /* top-left of the page */
+  top: 20px;
+  left: 20px;
+  color: #FAFAF7;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  text-decoration: none; /* remove underline */
+  z-index: 1000; /* above other elements */
+}
+
+.moodgarden:hover {
+  opacity: 0.8; /* subtle hover effect */
 }

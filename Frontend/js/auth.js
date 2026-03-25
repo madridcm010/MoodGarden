@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 localStorage.setItem("loggedIn", "true");
 
-                window.location.href = "recommendations.html";
+                window.location.href = "mood-input-base.html";
 
             } catch (err) {
                 alert(err.message);

@@ -1,284 +1,114 @@
-.mood-input-base-container1 {
-  width: 100%;
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #87ae73;
   display: flex;
-  overflow: auto;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  align-items: center;
-  flex-direction: column;
 }
- 
-.mood-input-base-thq-mood-input-base-elm {
-  gap: 16px;
-  width: 100%;
-  height: 1024px;
-  display: flex;
-  overflow: hidden;
-  position: relative;
-  align-items: flex-start;
-  flex-shrink: 0;
+.moodgarden {
+  color: #fafaf7;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-decoration: none; /* remove underline */
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* Container */
+.mood-input-base {
+  width: 90%;
+  max-width: 1440px;
+  background-color: grey;
   background-size: cover;
-  background-image: url("public/tq_dvhnr0swjk-0of6-1100h.png");
+  background-position: center;
+  position: relative;
+  border-radius: 15px;
+  padding: 2rem;
+  overflow: hidden;
+  text-align: center;
+  opacity: 85%;
 }
- 
-.mood-input-base-thq-frame1-elm {
-  gap: 24px;
-  top: 362px;
-  left: 297px;
-  width: 846px;
+
+/* Question text */
+.question {
+  color: #9F6F48;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.4;
+  margin-bottom: 3rem;
+}
+
+/* Buttons container */
+.mood-buttons {
   display: flex;
-  position: absolute;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 2rem;
 }
- 
-.mood-input-base-thq-happybutton-elm {
-  gap: 10px;
+
+/* Individual mood button */
+.mood-button {
   width: 150px;
   height: 150px;
-  display: flex;
-  padding: 10px;
-  overflow: hidden;
-  align-items: center;
-  flex-shrink: 0;
+  background: rgba(250, 250, 247, 0.5);
   border-radius: 24px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: rgba(250, 250, 247, 0.5);
-}
- 
-.mood-input-base-thq-text-elm1 {
-  width: 144px;
-  height: auto;
-  font-size: 48px;
-  font-style: Bold;
-  text-align: center;
-  font-family: Outfit;
-  font-weight: 700;
-  line-height: 40px;
-  font-stretch: normal;
-  text-decoration: none;
-}
- 
-.mood-input-base-text10 {
-  color: #000000;
-}
- 
-.mood-input-base-text11 {
-  color: #000000;
-}
- 
-.mood-input-base-text12 {
-  color: #ffffff;
-  font-size: 24px;
-}
- 
-.mood-input-base-thq-sadbutton-elm {
+  align-items: center;
   gap: 10px;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  padding: 10px;
-  overflow: hidden;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 24px;
-  flex-direction: column;
-  justify-content: center;
-  background-color: rgba(250, 250, 247, 0.5);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
- 
-.mood-input-base-thq-text-elm2 {
-  color: rgb(0, 0, 0);
-  width: 144px;
-  height: auto;
-  font-size: 48px;
-  font-style: Bold;
+
+/* Hover effect */
+.mood-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Emoji */
+.emoji {
+  font-size: 3rem;
+}
+
+/* Label */
+.label {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: #FAFAF7;
   text-align: center;
-  font-family: Outfit;
-  font-weight: 700;
-  line-height: 40px;
-  font-stretch: normal;
-  text-decoration: none;
 }
- 
-.mood-input-base-text13 {
-  color: #000000;
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mood-button {
+    width: 120px;
+    height: 120px;
+  }
+  .emoji {
+    font-size: 2.5rem;
+  }
 }
- 
-.mood-input-base-text15 {
-  color: #fbfbfa;
-  font-size: 24px;
-}
- 
-.mood-input-base-thq-angrybutton-elm {
-  gap: 10px;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  padding: 10px;
-  overflow: hidden;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 24px;
-  flex-direction: column;
-  justify-content: center;
-  background-color: rgba(250, 250, 247, 0.5);
-}
- 
-.mood-input-base-thq-text-elm3 {
-  width: 144px;
-  height: auto;
-  font-size: 48px;
-  font-style: Bold;
-  text-align: center;
-  font-family: Outfit;
-  font-weight: 700;
-  line-height: 40px;
-  font-stretch: normal;
-  text-decoration: none;
-}
- 
-.mood-input-base-text16 {
-  color: #000000;
-}
- 
-.mood-input-base-text17 {
-  color: #000000;
-}
- 
-.mood-input-base-text18 {
-  color: #f5eded;
-  font-size: 24px;
-}
- 
-.mood-input-base-thq-anxiousbutton-elm {
-  gap: 10px;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  padding: 10px;
-  overflow: hidden;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 24px;
-  flex-direction: column;
-  justify-content: center;
-  background-color: rgba(250, 250, 247, 0.5);
-}
- 
-.mood-input-base-thq-text-elm4 {
-  width: 144px;
-  height: auto;
-  font-size: 48px;
-  font-style: Bold;
-  text-align: center;
-  font-family: Outfit;
-  font-weight: 700;
-  line-height: 40px;
-  font-stretch: normal;
-  text-decoration: none;
-}
- 
-.mood-input-base-text19 {
-  color: #000000;
-}
- 
-.mood-input-base-text20 {
-  color: #000000;
-}
- 
-.mood-input-base-text21 {
-  color: #f9f6f6;
-  font-size: 24px;
-}
- 
-.mood-input-base-thq-calmbutton-elm {
-  gap: 10px;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  padding: 10px;
-  overflow: hidden;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 24px;
-  flex-direction: column;
-  justify-content: center;
-  background-color: rgba(250, 250, 247, 0.5);
-}
- 
-.mood-input-base-thq-text-elm5 {
-  color: rgb(0, 0, 0);
-  width: 144px;
-  height: auto;
-  font-size: 48px;
-  font-style: Bold;
-  text-align: center;
-  font-family: Outfit;
-  font-weight: 700;
-  line-height: 40px;
-  font-stretch: normal;
-  text-decoration: none;
-}
- 
-.mood-input-base-text22 {
-  color: #000000;
-}
- 
-.mood-input-base-text24 {
-  color: #ffffff;
-  font-size: 24px;
-}
- 
-.mood-input-base-thq-text-elm6 {
-  top: 257px;
-  left: 427px;
-  color: rgba(159, 111, 71, 1);
-  width: 585px;
-  height: auto;
-  position: absolute;
-  font-size: 45px;
-  font-style: Bold;
-  text-align: left;
-  font-family: Outfit;
-  font-weight: 700;
-  line-height: 66px;
-  font-stretch: normal;
-  text-decoration: none;
-}
- 
-.mood-input-base-link {
-  display: contents;
-}
- 
-.mood-input-base-container2 {
-  right: 50px;
-  border: 1px solid #ffffff5c;
-  bottom: 30px;
-  display: flex;
-  z-index: 22;
-  position: fixed;
-  box-shadow: 5px 5px 10px 0px rgba(31, 31, 31, 0.4);
-  min-height: auto;
-  align-items: center;
-  padding-top: 8px;
-  padding-left: 12px;
-  border-radius: 8px;
-  padding-right: 12px;
-  padding-bottom: 8px;
-  backdrop-filter: blur(6px);
-  background-color: rgba(41, 41, 41, 0.41);
-}
- 
-.mood-input-base-icon1 {
-  width: 24px;
-  margin-right: 4px;
-}
- 
-.mood-input-base-text25 {
-  color: white;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
+
+@media (max-width: 480px) {
+  .mood-button {
+    width: 100px;
+    height: 100px;
+  }
+  .emoji {
+    font-size: 2rem;
+  }
+  .label {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  }
 }

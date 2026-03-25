@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from database import get_db, Base,engine
-from crud import create_user, get_user_by_username
+from crud import create_user, get_user_by_email
 from auth import verify_password
 from schemas import UserRegister, UserLogin, UserProfile
 from models import User
@@ -31,15 +31,15 @@ Base.metadata.create_all(bind=engine)
 
 @router.post("/register", response_model=UserProfile)
 def register(data: UserRegister, db: Session = Depends(get_db)):
-    if get_user_by_username(db, data.username):
+    if get_user_by_email(db, data.email):
         raise HTTPException(status_code=400, detail="Username already exists")
 
-    user = create_user(db, data.username, data.email, data.password)
+    user = create_user(db, data.name,  data.email, data.password)
     return user
 
 @router.post("/login")
 def login(data: UserLogin, db: Session = Depends(get_db)):
-    user = get_user_by_username(db, data.username)
+    user = get_user_by_email(db, data.email)
     if not user or not verify_password(data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 

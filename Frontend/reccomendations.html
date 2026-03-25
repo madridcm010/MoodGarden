@@ -1,39 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recommendations</title>
-  <link rel="stylesheet" href="recommendations.css" />
+  <link rel="stylesheet" href="reccomendations.css">
 </head>
-
 <body>
-  <div class="recommendations-page">
-    <header class="top-bar">
-      <h1 class="logo">MoodGarden</h1>
-    </header>
 
-    <main class="content">
-      <h2 class="section-title">Helpful quote</h2>
+<div class="recommendations">
+  
+  <a href="/Frontend/index.html" class="moodgarden">MoodGarden</a>
+  <div class="helpful-quote">“Helpful quote”</div>
+  <div class="tips">Tips</div>
 
-      <section class="card" id="quoteCard"></section>
+  <!-- Display-only result cards -->
+  <div class="card card-top">Recommended Action: Drink water, take a walk, and log mood</div>
+  <div class="card card-bottom">Next Suggestion: Try a short meditation session</div>
 
-      <div class="row">
-        <h3 class="sub-title">Tips</h3>
-        <section class="card" id="tipsCard"></section>
-      </div>
+  <a href="#" class="log-more-btn">Want to log more?</a>
+</div>
 
-      <div class="row">
-        <h3 class="sub-title">Recommended Action:</h3>
-        <section class="card" id="actionCard"></section>
-      </div>
-
-      <button id="logMoreBtn" class="cta-btn">Want to log more?</button>
-    </main>
-  </div>
-
-  <!-- IMPORTANT: JS FILES -->
-  <script src="js/api.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>
