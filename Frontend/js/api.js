@@ -1,6 +1,6 @@
 const BASE_URL = "http://localhost:8000";
 
-// LOGIN API
+// ================= LOGIN =================
 async function loginUser(email, password) {
     const res = await fetch(`${BASE_URL}/login`, {
         method: "POST",
@@ -20,7 +20,7 @@ async function loginUser(email, password) {
     return await res.json();
 }
 
-// SIGNUP API
+// ================= SIGNUP =================
 async function signupUser(name, email, password) {
     const res = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
@@ -36,6 +36,26 @@ async function signupUser(name, email, password) {
 
     if (!res.ok) {
         throw new Error("Signup failed");
+    }
+
+    return await res.json();
+}
+
+// ================= SUBMIT MOOD =================
+async function submitMood(mood, note) {
+    const res = await fetch(`${BASE_URL}/mood`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            mood: mood,
+            note: note
+        })
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to save mood");
     }
 
     return await res.json();
