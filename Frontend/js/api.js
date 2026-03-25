@@ -1,14 +1,14 @@
 const BASE_URL = "http://localhost:8000";
 
-// ================= LOGIN =================
-async function loginUser(email, password) {
-    const res = await fetch(`${BASE_URL}/login`, {
+// LOGIN API
+async function loginUser(username, password) {
+    const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            username: email,
+            username: username,
             password: password
         })
     });
@@ -22,7 +22,7 @@ async function loginUser(email, password) {
 
 // ================= SIGNUP =================
 async function signupUser(name, email, password) {
-    const res = await fetch(`${BASE_URL}/signup`, {
+    const res = await fetch(`${BASE_URL}/auth/signup`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

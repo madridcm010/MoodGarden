@@ -3,19 +3,31 @@ from fastapi import FastAPI, HTTPException, APIRouter
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from database import get_db
+from database import get_db, Base,engine
 from crud import create_user, get_user_by_username
 from auth import verify_password
 from schemas import UserRegister, UserLogin, UserProfile
-from auth import create_user, authenticate_user
 from models import User
+import models
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-from models import User
 app.include_router(ai_router)
 
+@app.on_event("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
+
 router = APIRouter(prefix="/auth")
+Base.metadata.create_all(bind=engine)
 
 @router.post("/register", response_model=UserProfile)
 def register(data: UserRegister, db: Session = Depends(get_db)):
@@ -33,6 +45,7 @@ def login(data: UserLogin, db: Session = Depends(get_db)):
 
     return {"message": "Login successful", "user_id": user.id}
 
+app.include_router(router)
 @app.get("/test-db")
 def test_db(db: Session = Depends(get_db)):
     try:
