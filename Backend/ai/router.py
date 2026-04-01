@@ -1,39 +1,48 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from .ai_service import analyze_sentiment
-from .recommender import map_sentiment_to_category, get_recommendation
+from .ai_service import analyze_mood_text, save_result_to_db, get_saved_results
 
 router = APIRouter(prefix="/ai", tags=["AI"])
 
+
 class AnalyzeRequest(BaseModel):
     text: str
+    store_result: bool = True
+
 
 class AnalyzeResponse(BaseModel):
     sentiment: str
     confidence: float
     category: str
-    recommendation: str
+    emotional_tone: str
+    short_reflection: str
+    supportive_reflection: str
+    fallback_used: bool
+    processing_time_ms: float
+
 
 @router.post("/analyze", response_model=AnalyzeResponse)
-def ai_analyze(req: AnalyzeRequest):
-    text = req.text.strip()
+def analyze(request: AnalyzeRequest):
+    if not request.text.strip():
+        raise HTTPException(status_code=400, detail="Text cannot be empty.")
 
-    # fallback for empty input
-    if not text:
-        return AnalyzeResponse(
-            sentiment="NEUTRAL",
-            confidence=0.0,
-            category="NEUTRAL",
-            recommendation=get_recommendation("NEUTRAL")
-        )
+    result = analyze_mood_text(request.text)
 
-    sent = analyze_sentiment(text)
-    category = map_sentiment_to_category(sent["label"], sent["score"])
-    rec = get_recommendation(category)
+    if request.store_result:
+        save_result_to_db(result)
 
     return AnalyzeResponse(
-        sentiment=sent["label"],
-        confidence=sent["score"],
-        category=category,
-        recommendation=rec
+        sentiment=result["sentiment"],
+        confidence=result["confidence"],
+        category=result["mood_category"],
+        emotional_tone=result["emotional_tone"],
+        short_reflection=result["short_reflection"],
+        supportive_reflection=result["supportive_reflection"],
+        fallback_used=result["fallback_used"],
+        processing_time_ms=result["processing_time_ms"]
     )
+
+
+@router.get("/results")
+def results():
+    return get_saved_results()
