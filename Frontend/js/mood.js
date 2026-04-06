@@ -12,17 +12,25 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     moods.forEach(mood => {
-        const btn = document.getElementById(mood.id);
+    const btn = document.getElementById(mood.id);
 
-        if (btn) {
-            btn.addEventListener("click", function () {
-                selectedMood = mood.value;
-                console.log("Selected:", selectedMood);
+    if (btn) {
+        btn.addEventListener("click", function () {
 
-                btn.style.border = "3px solid green";
+            selectedMood = mood.value;
+
+            // remove border from all
+            document.querySelectorAll(".mood-button").forEach(b => {
+                b.style.border = "none";
             });
-        }
-    });
+
+            // highlight selected
+            btn.style.border = "3px solid green";
+
+            console.log("Selected:", selectedMood);
+        });
+    }
+});
 
     // ================= NEXT BUTTON =================
     const nextBtn = document.getElementById("nextBtn");
@@ -41,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             try {
                 await submitMood(selectedMood, note);
 
-                window.location.href = "recommendations.html";
+                window.location.href = "reccomendations.html";
 
             } catch (err) {
                 alert("Error saving mood");
@@ -50,5 +58,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
     }
-
+    
 });

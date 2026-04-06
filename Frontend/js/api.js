@@ -43,20 +43,23 @@ async function signupUser(name, email, password) {
 
 // ================= SUBMIT MOOD =================
 async function submitMood(mood, note) {
-    const res = await fetch(`${BASE_URL}/mood`, {
+    const response = await fetch("http://127.0.0.1:8000/ai/analyze", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            mood: mood,
-            note: note
+            text: `${mood}. ${note}`,
+            store_result: true
         })
     });
 
-    if (!res.ok) {
-        throw new Error("Failed to save mood");
+    if (!response.ok) {
+        throw new Error("API failed");
     }
 
-    return await res.json();
+    const data = await response.json();
+
+    // Save result for next page
+    localStorage.setItem("aiResult", JSON.stringify(data));
 }
