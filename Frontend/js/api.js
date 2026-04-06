@@ -1,12 +1,13 @@
 const BASE_URL = "http://localhost:8000";
 
-// LOGIN API
-async function loginUser(email, password) {
+// ================= LOGIN =================
+export async function loginUser(email, password) {
     const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+      headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+}
         body: JSON.stringify({
             email: email,
             password: password
@@ -21,12 +22,13 @@ async function loginUser(email, password) {
 }
 
 // ================= SIGNUP =================
-async function signupUser(name, email, password) {
+export async function signupUser(name, email, password) {
     const res = await fetch(`${BASE_URL}/auth/register`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+       headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+}
         body: JSON.stringify({
             name: name,
             email: email,
@@ -42,12 +44,13 @@ async function signupUser(name, email, password) {
 }
 
 // ================= SUBMIT MOOD =================
-async function submitMood(mood, note) {
-    const response = await fetch("http://127.0.0.1:8000/ai/analyze", {
+export async function submitMood(mood, note) {
+    const response = await fetch(`${BASE_URL}/ai/analyze`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+      headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+}
         body: JSON.stringify({
             text: `${mood}. ${note}`,
             store_result: true
@@ -60,6 +63,45 @@ async function submitMood(mood, note) {
 
     const data = await response.json();
 
-    // Save result for next page
     localStorage.setItem("aiResult", JSON.stringify(data));
+}
+
+// ================= FETCH MOOD LOGS =================
+export async function fetchMoodLogs() {
+    const res = await fetch(`${BASE_URL}/api/moods`, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch mood logs");
+    }
+
+    return await res.json();
+}
+
+// ================= FETCH RECOMMENDATIONS =================
+export async function fetchRecommendations() {
+    const res = await fetch(`${BASE_URL}/api/recommendations`, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch recommendations");
+    }
+
+    return await res.json();
+}
+// ========= DASHBOARD FUNCTIONS ========== //
+export async function fetchMoodLogs() {
+  const res = await fetch("/api/moods");
+  return await res.json();
+}
+
+export async function fetchRecommendations() {
+  const res = await fetch("/api/recommendations");
+  return await res.json();
 }
