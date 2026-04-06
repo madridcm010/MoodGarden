@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MoodGarden Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <h1>🌿 MoodGarden</h1>
+    <div>
+      <button id="settingsBtn">⚙️ Settings</button>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
+  <main class="dashboard">
+
+    <section class="welcome">
+      <h2 id="welcomeText">Welcome back 🌱</h2>
+    </section>
+
+    <!-- Mood Summary -->
+    <section class="card">
+      <h3>Today's Mood</h3>
+      <p id="todayMood">Loading...</p>
+    </section>
+
+    <!-- Emotion Analysis -->
+    <section class="card">
+      <h3>Emotion Analysis</h3>
+      <canvas id="emotionChart"></canvas>
+    </section>
+
+    <!-- Recent Logs -->
+    <section class="card">
+      <h3>Recent Logs</h3>
+      <ul id="recentLogs"></ul>
+    </section>
+
+    <!-- Recommendations -->
+    <section class="card">
+      <h3>Recommendations</h3>
+      <ul id="recommendations"></ul>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
