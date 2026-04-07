@@ -24,6 +24,31 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("moodLabel").innerText = mood;
     document.getElementById("moodEmoji").innerText = moodMap[mood] || "😐";
 
+
+    // INTENSITY HANDLING
+    const slider = document.getElementById("intensitySlider");
+    const intensityText = document.getElementById("intensityValue");
+
+    const intensityMap = {
+        1: "Very Low",
+        2: "Low",
+        3: "Neutral",
+        4: "High",
+        5: "Very High"
+    };
+
+    let intensity = slider.value;
+
+    function updateIntensityDisplay(value) {
+        intensityText.innerText = `Intensity: ${intensityMap[value]}`;
+    }
+
+    updateIntensityDisplay(slider.value);
+
+    slider.addEventListener("input", () => {
+        intensity = slider.value;
+        updateIntensityDisplay(intensity);
+    });
     //  Handle submit
     document.getElementById("nextBtn").addEventListener("click", async () => {
 
