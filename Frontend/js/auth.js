@@ -15,11 +15,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             try {
-                await loginUser(email, password);
+               const data = await loginUser(email, password);
 
-                localStorage.setItem("loggedIn", "true");
+// store token + user info
+localStorage.setItem("token", data.token);
+localStorage.setItem("user", JSON.stringify(data.user));
 
-                window.location.href = "mood-input-base.html";
+// optional (you can keep or remove this)
+localStorage.setItem("loggedIn", "true");
+
+window.location.href = "mood-input-base.html";
 
             } catch (err) {
                 alert(err.message);
@@ -66,3 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+export function getUser() {
+    return JSON.parse(localStorage.getItem("user"));
+}
