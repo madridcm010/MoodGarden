@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            await submitMood(mood, note);
+            await submitMood(mood, note, intensity);
 
             alert("Mood submitted successfully 🌱");
 
