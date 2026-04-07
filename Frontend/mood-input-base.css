@@ -67,7 +67,7 @@ body {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease;
 }
 
 /* Hover effect */
@@ -111,4 +111,10 @@ body {
   .label {
     font-size: clamp(0.9rem, 2.5vw, 1.2rem);
   }
+}
+/* Selected mood state */
+.mood-button.selected {
+  border: 3px solid #2f855a;
+  background-color: rgba(230, 244, 234, 0.8);
+  transform: scale(1.05);
 }
