@@ -44,7 +44,7 @@ export async function signupUser(name, email, password) {
 }
 
 // ================= SUBMIT MOOD =================
-export async function submitMood(mood, note) {
+export async function submitMood(mood, note, intensity) {
     const response = await fetch(`${BASE_URL}/ai/analyze`, {
         method: "POST",
       headers: {
@@ -53,6 +53,7 @@ export async function submitMood(mood, note) {
 }
         body: JSON.stringify({
             text: `${mood}. ${note}`,
+            intensity: Number(intensity)
             store_result: true
         })
     });
