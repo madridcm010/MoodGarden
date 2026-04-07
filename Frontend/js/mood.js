@@ -1,62 +1,35 @@
-document.addEventListener("DOMContentLoaded", function () {
+let selectedMood = null;
 
-    let selectedMood = null;
+// Select all mood buttons
+const moodButtons = document.querySelectorAll(".mood-button");
 
-    // ================= MOOD BUTTONS =================
-    const moods = [
-        { id: "happyMoodBtn", value: "happy" },
-        { id: "sadMoodBtn", value: "sad" },
-        { id: "angryMoodBtn", value: "angry" },
-        { id: "anxiousMoodBtn", value: "anxious" },
-        { id: "calmMoodBtn", value: "calm" }
-    ];
+moodButtons.forEach(button => {
+    button.addEventListener("click", () => {
 
-    moods.forEach(mood => {
-    const btn = document.getElementById(mood.id);
+        // remove previous selection
+        moodButtons.forEach(btn => btn.classList.remove("selected"));
 
-    if (btn) {
-        btn.addEventListener("click", function () {
+        // highlight selected
+        button.classList.add("selected");
 
-            selectedMood = mood.value;
+        // get mood label text
+        selectedMood = button.querySelector(".label").innerText.toLowerCase();
 
-            // remove border from all
-            document.querySelectorAll(".mood-button").forEach(b => {
-                b.style.border = "none";
-            });
-
-            // highlight selected
-            btn.style.border = "3px solid green";
-
-            console.log("Selected:", selectedMood);
-        });
-    }
+        console.log("Selected mood:", selectedMood);
+    });
 });
 
-    // ================= NEXT BUTTON =================
-    const nextBtn = document.getElementById("nextBtn");
+// Continue button
+document.getElementById("nextBtn").addEventListener("click", () => {
 
-    if (nextBtn) {
-        nextBtn.addEventListener("click", async function () {
-
-            if (!selectedMood) {
-                alert("Please select a mood first");
-                return;
-            }
-
-            const noteInput = document.getElementById("moodNote");
-            const note = noteInput ? noteInput.value : "";
-
-            try {
-                await submitMood(selectedMood, note);
-
-                window.location.href = "reccomendations.html";
-
-            } catch (err) {
-                alert("Error saving mood");
-                console.error(err);
-            }
-
-        });
+    if (!selectedMood) {
+        alert("Please select a mood first");
+        return;
     }
-    
+
+    // store mood for next step
+    localStorage.setItem("selectedMood", selectedMood);
+
+    // redirect to ONE shared input page
+    window.location.href = "mood-details.html";
 });
