@@ -1,6 +1,14 @@
 body {
     background-color: #87ae73;
 }
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark .auth-card {
+  background-color: #1f1f1f;
+}
 * {
   box-sizing: border-box;
   margin: 0;
