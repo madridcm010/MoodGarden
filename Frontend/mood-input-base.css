@@ -13,6 +13,10 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+body.dark {
+  background-color: #1a1a1a;
+  color: white;
+}
 .moodgarden {
   position: absolute;
   top: 20px;
