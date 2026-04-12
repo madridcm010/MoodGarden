@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+
+<div class="settings-container">
+
+  <!-- Logo -->
+  <a href="/Frontend/index.html" class="moodgarden">MoodGarden</a>
+
+  <h1>Settings</h1>
+
+  <!-- Change Email -->
+  <div class="settings-section">
+    <h2>Change Email</h2>
+    <input type="email" id="newEmail" placeholder="Enter new email">
+    <button id="changeEmailBtn">Update Email</button>
+  </div>
+
+  <!-- Change Password -->
+  <div class="settings-section">
+    <h2>Change Password</h2>
+    <input type="password" id="newPassword" placeholder="Enter new password">
+    <button id="changePasswordBtn">Update Password</button>
+  </div>
+
+  <!-- Dark Mode -->
+  <div class="settings-section">
+    <h2>Appearance</h2>
+    <label class="toggle">
+      <input type="checkbox" id="darkModeToggle">
+      <span>Enable Dark Mode</span>
+    </label>
+  </div>
+
+</div>
+
+<script src="js/settings.js"></script>
+</body>
+</html>
