@@ -1,0 +1,75 @@
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #87ae73;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Base dark mode */
+body.dark {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+/* Component dark mode */
+body.dark .card { background-color: #2a2a2a; }
+body.dark button { background-color: #444; color: white; }
+body.dark .navbar { background-color: #222; }
+}
+
+.settings-container {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  background: rgba(255,255,255,0.9);
+  padding: 2rem;
+  border-radius: 15px;
+}
+
+body.dark .settings-container {
+  background: rgba(40,40,40,0.95);
+}
+
+/* Logo */
+.moodgarden {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Sections */
+.settings-section {
+  margin-top: 2rem;
+}
+
+.settings-section h2 {
+  margin-bottom: 0.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background-color: #2f855a;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
