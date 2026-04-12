@@ -3,6 +3,10 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background: #f4f9f4;
 }
+body.dark {
+  background-color: #1a1a1a;
+  color: white;
+}
 
 .navbar {
   display: flex;
