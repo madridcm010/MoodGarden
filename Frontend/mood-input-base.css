@@ -13,9 +13,16 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+/* Base dark mode */
 body.dark {
   background-color: #1a1a1a;
   color: white;
+}
+
+/* Component dark mode */
+body.dark .card { background-color: #2a2a2a; }
+body.dark button { background-color: #444; color: white; }
+body.dark .navbar { background-color: #222; }
 }
 .moodgarden {
   position: absolute;
