@@ -7,6 +7,18 @@ body.dark {
   background-color: #1a1a1a;
   color: white;
 }
+body.dark .card {
+  background-color: #2a2a2a;
+}
+
+body.dark button {
+  background-color: #444;
+  color: white;
+}
+
+body.dark .navbar {
+  background-color: #222;
+}
 
 .navbar {
   display: flex;
