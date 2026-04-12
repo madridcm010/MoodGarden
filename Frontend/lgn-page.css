@@ -5,6 +5,14 @@ body {
   background-color: #87ae73;
   position: relative; /* for positioning header */
 }
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark .auth-card {
+  background-color: #1f1f1f;
+}
 
 .login-page {
   display: flex;
