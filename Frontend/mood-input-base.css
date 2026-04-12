@@ -14,13 +14,18 @@ body {
   min-height: 100vh;
 }
 .moodgarden {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
   color: #fafaf7;
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-decoration: none; /* remove underline */
+  text-decoration: none;
   cursor: pointer;
-  display: inline-block;
+}
+.moodgarden:hover {
+  opacity: 0.8;
 }
 
 /* Container */
