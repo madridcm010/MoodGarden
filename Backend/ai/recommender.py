@@ -36,6 +36,38 @@ def get_reflections(category: str):
             "short_reflection": "You seem focused and ready to keep moving.",
             "supportive_reflection": "You seem locked in and ready to move forward. This is a good time to keep building momentum."
         },
+        "burnout": {
+            "short_reflection": "You seem mentally worn down right now.",
+            "supportive_reflection": "You may be running on empty. It may help to step back, rest, and lower the pressure where you can."
+        },
+        "unmotivated": {
+            "short_reflection": "It seems hard to get going right now.",
+            "supportive_reflection": "That happens sometimes. Try starting with one very small task so things feel easier to begin."
+        },
+        "lonely": {
+            "short_reflection": "You seem disconnected or alone right now.",
+            "supportive_reflection": "Feeling lonely can be heavy. Reaching out to one person you trust may help you feel a little more supported."
+        },
+        "hopeful": {
+            "short_reflection": "You seem to still see some good ahead.",
+            "supportive_reflection": "That hope matters. Try to hold onto it and keep moving toward what is helping you feel better."
+        },
+        "guilty": {
+            "short_reflection": "It sounds like something is weighing on your mind.",
+            "supportive_reflection": "Guilt can feel heavy. Try to focus on what you can learn, repair, or do differently moving forward."
+        },
+        "ashamed": {
+            "short_reflection": "You seem to be feeling hard on yourself right now.",
+            "supportive_reflection": "Try to give yourself some grace. One moment or mistake does not define who you are."
+        },
+        "frustrated": {
+            "short_reflection": "It sounds like things are really getting on your nerves.",
+            "supportive_reflection": "Frustration can build up fast. Taking a short pause and resetting may help before trying again."
+        },
+        "overwhelmed": {
+            "short_reflection": "It seems like too much is hitting you at once.",
+            "supportive_reflection": "When everything feels like a lot, try shrinking it down to one next step instead of the whole problem."
+        },
         "neutral": {
             "short_reflection": "Your mood seems fairly balanced right now.",
             "supportive_reflection": "I could not fully tell your mood from the text, but taking a moment to reflect on how your day is going may help you figure out what you need next."
