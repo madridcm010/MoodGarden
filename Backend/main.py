@@ -19,6 +19,7 @@ app.add_middleware(
     allow_origins=[
         "http://127.0.0.1:8000",
         "http://127.0.0.1:5500",
+        "http://127.0.0.1:5501"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -53,6 +54,11 @@ def login(data: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
     return {"message": "Login successful", "user_id": user.id}
+
+@app.get("/api/moods/{userId}")
+def get_moods(userId: int, db: Session = Depends(get_db)):
+    results = db.query(Result).filter(Result.user_id == userId).all()
+    return results
 
 # -------------------------
 # INCLUDE ROUTERS

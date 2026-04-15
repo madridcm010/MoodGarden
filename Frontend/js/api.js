@@ -35,12 +35,10 @@ export async function signupUser(name, email, password) {
 }
 
 // ================= SUBMIT MOOD =================
-export async function submitMood(mood, note, intensity) {
-    const userId = localStorage.getItem("user_id");
 
-    if (!userId) {
-        throw new Error("User ID missing — user not logged in");
-    }
+
+export async function submitMood(mood, note) {
+    const userId = localStorage.getItem("user_id");
 
     const response = await fetch(`${BASE_URL}/ai/analyze`, {
         method: "POST",
@@ -55,22 +53,23 @@ export async function submitMood(mood, note, intensity) {
 
     if (!response.ok) {
         const err = await response.json().catch(() => ({}));
-        throw new Error(err.detail || "API failed");
+        throw new Error(err.detail || "submitMood failed");
     }
 
     const data = await response.json();
+
     localStorage.setItem("aiResult", JSON.stringify(data));
+
+    return data;
 }
 
 
 
 // ================= FETCH MOOD LOGS =================
 export async function fetchMoodLogs() {
-    const res = await fetch(`${BASE_URL}/api/moods`, {
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-        }
-    });
+    const userId = localStorage.getItem("user_id");
+
+    const res = await fetch(`${BASE_URL}/api/moods/${userId}`);
 
     if (!res.ok) {
         throw new Error("Failed to fetch mood logs");
@@ -80,12 +79,8 @@ export async function fetchMoodLogs() {
 }
 
 // ================= FETCH RECOMMENDATIONS =================
-export async function fetchRecommendations() {
-    const res = await fetch(`${BASE_URL}/api/recommendations`, {
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-        }
-    });
+export async function fetchRecommendations(userId) {
+    const res = await fetch(`${BASE_URL}/ai/summary/${userId}`);
 
     if (!res.ok) {
         throw new Error("Failed to fetch recommendations");

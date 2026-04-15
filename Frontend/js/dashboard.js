@@ -2,98 +2,106 @@ import { getUser } from './auth.js';
 import { fetchMoodLogs, fetchRecommendations } from './api.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const user = getUser();
 
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+    const userId = getUser();
 
-  document.getElementById("welcomeText").innerText =
-    `Welcome back, ${user.username} 🌱`;
+    if (!userId) {
+        window.location.href = "login-page.html";
+        return;
+    }
 
-  loadDashboard();
+    // ❌ FIX: no user.username (doesn't exist)
+    document.getElementById("welcomeText").innerText =
+        `Welcome back 🌱 (User ${userId})`;
+
+    loadDashboard(userId);
 });
 
-async function loadDashboard() {
-  try {
-    const logs = await fetchMoodLogs();
-    displayTodayMood(logs);
-    displayRecentLogs(logs);
-    renderChart(logs);
+async function loadDashboard(userId) {
+    try {
+        const data = await fetchMoodLogs();
+        console.log("MOOD LOGS RAW:", data);
 
-    const recs = await fetchRecommendations();
-    displayRecommendations(recs);
+        const logs = Array.isArray(data)
+            ? data
+            : data.results || data.moods || [];
 
-  } catch (err) {
-    console.error(err);
-  }
-}
+        displayTodayMood(logs);
+        displayRecentLogs(logs);
 
-// 🟢 Today's Mood
-function displayTodayMood(logs) {
-  const today = new Date().toDateString();
+        const recs = await fetchRecommendations(userId);
+        console.log("RECS RAW:", recs);
 
-  const todayLog = logs.find(log =>
-    new Date(log.date).toDateString() === today
-  );
+        displayRecommendations(recs);
 
-  document.getElementById("todayMood").innerText =
-    todayLog ? `${todayLog.mood} (Intensity: ${todayLog.intensity})`
-             : "No mood logged today";
-}
-
-// 📝 Recent Logs
-function displayRecentLogs(logs) {
-  const list = document.getElementById("recentLogs");
-  list.innerHTML = "";
-
-  logs.slice(0, 5).forEach(log => {
-    const li = document.createElement("li");
-    li.textContent = `${log.date}: ${log.mood} (${log.intensity})`;
-    list.appendChild(li);
-  });
-}
-
-// 📊 Chart.js Emotion Analysis
-function renderChart(logs) {
-  const moodCounts = {};
-
-  logs.forEach(log => {
-    moodCounts[log.mood] = (moodCounts[log.mood] || 0) + 1;
-  });
-
-  const ctx = document.getElementById("emotionChart");
-
-  new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: Object.keys(moodCounts),
-      datasets: [{
-        data: Object.values(moodCounts),
-      }]
+    } catch (err) {
+        console.error("DASHBOARD ERROR:", err);
     }
-  });
 }
 
-// 🎯 Recommendations
-function displayRecommendations(recs) {
-  const list = document.getElementById("recommendations");
-  list.innerHTML = "";
+// 🟢 TODAY MOOD
+function displayTodayMood(logs) {
+    const todayLog = logs[0]; // latest entry
 
-  recs.forEach(rec => {
-    const li = document.createElement("li");
-    li.textContent = rec;
-    list.appendChild(li);
-  });
+    document.getElementById("todayMood").innerText =
+        todayLog
+            ? `${todayLog.mood_category} (${todayLog.cleaned_text})`
+            : "No mood logged today";
 }
 
-// ⚙️ Buttons
+// 📝 RECENT LOGS
+function displayRecentLogs(logs) {
+    const list = document.getElementById("recentLogs");
+    list.innerHTML = "";
+    
+
+    logs.slice(0, 5).forEach(log => {
+        const li = document.createElement("li");
+
+        li.textContent = `${log.mood_category}: ${log.cleaned_text}`;
+
+        list.appendChild(li);
+    });
+}
+
+// 🎯 RECOMMENDATIONS
+function displayRecommendations(data) {
+    const list = document.getElementById("recommendations");
+
+    if (!list) {
+        console.error("❌ recommendations element not found");
+        return;
+    }
+
+    list.innerHTML = "";
+
+    const emotion = data.most_common_emotion;
+    const total = data.total_entries;
+
+    const recommendations = [
+        `You logged ${total} moods`,
+        `Your most common emotion is: ${emotion}`,
+        `Recent trend: ${
+            emotion === "neutral"
+                ? "Try adding more emotional detail"
+                : "Good emotional awareness!"
+        }`
+    ];
+
+    recommendations.forEach(text => {
+        const li = document.createElement("li");
+        li.textContent = text;
+        list.appendChild(li);
+    });
+}
+
+// ⚙️ SETTINGS
 document.getElementById("settingsBtn").onclick = () => {
-  window.location.href = "settings.html";
+    window.location.href = "settings.html";
 };
 
+// 🚪 LOGOUT FIXED
 document.getElementById("logoutBtn").onclick = () => {
-  localStorage.removeItem("user");
-  window.location.href = "login.html";
+    localStorage.removeItem("user_id");
+    window.location.href = "login-page.html";
 };

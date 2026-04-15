@@ -70,13 +70,13 @@ console.log("About to attach DOMContentLoaded");
         try {
             await submitMood(mood, note, intensity);
 
+            window.location.href= "dashboard.html";
             alert("Mood submitted successfully 🌱");
 
             // Clear stored mood
             console.log("Redirecting now...");
             
             // Go to dashboard
-            window.location.assign("dashboard.html");
 
             //localStorage.removeItem("selectedMood");
         } catch (err) {

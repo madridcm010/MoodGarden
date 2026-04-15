@@ -2,7 +2,6 @@ import { loginUser, signupUser } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ================= LOGIN =================
     const loginBtn = document.getElementById("loginBtn");
 
     if (loginBtn) {
@@ -17,51 +16,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-          try {
-    const data = await loginUser(email, password);
-
-    // Your backend returns ONLY: { message, user_id }
-    localStorage.setItem("user_id", data.user_id);
-    localStorage.setItem("loggedIn", "true");
-
-    window.location.href = "mood-input-base.html";
-
-} catch (err) {
-    alert(err.message);
-    console.error(err);
-}
-
-        });
-    }   // ← FIXED: closes the loginBtn if-block
-
-
-    // ================= SIGNUP =================
-    const signupForm = document.getElementById("signupForm");
-
-    if (signupForm) {
-        signupForm.addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("signupEmail").value.trim();
-            const password = document.getElementById("signupPassword").value.trim();
-            const confirmPassword = document.getElementById("confirmPassword").value.trim();
-
-            if (!email || !password || !confirmPassword) {
-                alert("Please fill all required fields");
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                alert("Passwords do not match");
-                return;
-            }
-
             try {
-                await signupUser(name, email, password);
+                const data = await loginUser(email, password);
 
-                alert("Account created successfully!");
-                window.location.href = "login-page.html";
+                console.log("LOGIN RESPONSE:", data);
+
+                const userId = typeof data === "object" ? data.user_id : data;
+
+                if (!userId) {
+                    throw new Error("No user_id returned from backend");
+                }
+
+                localStorage.setItem("user_id", userId);
+
+                window.location.href = "mood-input-base.html";
 
             } catch (err) {
                 alert(err.message);
@@ -70,8 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-}); // ← closes DOMContentLoaded
+});
 
+// ✅ MUST BE OUTSIDE EVERYTHING
 export function getUser() {
     return localStorage.getItem("user_id");
 }
