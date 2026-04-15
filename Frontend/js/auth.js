@@ -2,6 +2,7 @@ import { loginUser, signupUser } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    // ================= LOGIN =================
     const loginBtn = document.getElementById("loginBtn");
 
     if (loginBtn) {
@@ -11,36 +12,58 @@ document.addEventListener("DOMContentLoaded", function () {
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value.trim();
 
-            if (!email || !password) {
-                alert("Please enter email and password");
-                return;
-            }
-
             try {
                 const data = await loginUser(email, password);
 
-                console.log("LOGIN RESPONSE:", data);
-
                 const userId = typeof data === "object" ? data.user_id : data;
-
-                if (!userId) {
-                    throw new Error("No user_id returned from backend");
-                }
 
                 localStorage.setItem("user_id", userId);
 
                 window.location.href = "mood-input-base.html";
 
             } catch (err) {
-                alert(err.message);
                 console.error(err);
+                alert(err.message);
+            }
+        });
+    }
+
+    // ================= SIGNUP (MISSING PIECE) =================
+    const signupForm = document.getElementById("signupForm");
+
+    if (signupForm) {
+        signupForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("signupEmail").value.trim();
+            const password = document.getElementById("signupPassword").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                return;
+            }
+
+            try {
+                const res = await signupUser(name, email, password);
+
+                console.log("SIGNUP RESPONSE:", res);
+
+                alert("Account created successfully!");
+
+                window.location.href = "lgn-page.html";
+
+            } catch (err) {
+                console.error(err);
+                alert(err.message);
             }
         });
     }
 
 });
 
-// ✅ MUST BE OUTSIDE EVERYTHING
+// ================= GET USER =================
 export function getUser() {
     return localStorage.getItem("user_id");
 }
