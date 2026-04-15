@@ -552,7 +552,7 @@ def analyze_mood_text(user_id: str, text: str) -> Dict[str, Any]:
         confidence = round(float(probabilities[predicted_index]), 3)
         fallback_used = True
 
-    if confidence < 0.55:
+    if confidence < 0.30:
         mood_category = "neutral"
         confidence = 0.50
         fallback_used = True
