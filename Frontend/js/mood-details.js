@@ -1,6 +1,13 @@
 import { submitMood } from './api.js';
 
 document.addEventListener("DOMContentLoaded", () => {
+console.log("SCRIPT LOADED");
+console.log("About to attach DOMContentLoaded");
+    console.log("DOM READY");
+
+    const btn = document.getElementById("nextBtn");
+    console.log("nextBtn element:", btn);
+
 
     //  Get selected mood from previous page
     const mood = localStorage.getItem("selectedMood");
@@ -53,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("nextBtn").addEventListener("click", async () => {
 
         const note = document.getElementById("moodNote").value;
+        console.log("CLICKED");
 
         if (!note.trim()) {
             alert("Please write something about your mood");
@@ -65,15 +73,15 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Mood submitted successfully 🌱");
 
             // Clear stored mood
-            localStorage.removeItem("selectedMood");
-
+            console.log("Redirecting now...");
+            
             // Go to dashboard
-            window.location.href = "dashboard.html";
+            window.location.assign("dashboard.html");
 
+            //localStorage.removeItem("selectedMood");
         } catch (err) {
             console.error(err);
             alert("Failed to submit mood");
         }
     });
-
 });

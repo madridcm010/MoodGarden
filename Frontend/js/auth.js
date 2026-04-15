@@ -1,10 +1,13 @@
+import { loginUser, signupUser } from "./api.js";
+
 document.addEventListener("DOMContentLoaded", function () {
 
     // ================= LOGIN =================
     const loginBtn = document.getElementById("loginBtn");
 
     if (loginBtn) {
-        loginBtn.addEventListener("click", async function () {
+        loginBtn.addEventListener("click", async function (e) {
+            e.preventDefault();
 
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value.trim();
@@ -14,25 +17,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            try {
-               const data = await loginUser(email, password);
+          try {
+    const data = await loginUser(email, password);
 
-// store token + user info
-localStorage.setItem("token", data.token);
-localStorage.setItem("user", JSON.stringify(data.user));
+    // Your backend returns ONLY: { message, user_id }
+    localStorage.setItem("user_id", data.user_id);
+    localStorage.setItem("loggedIn", "true");
 
-// optional (you can keep or remove this)
-localStorage.setItem("loggedIn", "true");
+    window.location.href = "mood-input-base.html";
 
-window.location.href = "mood-input-base.html";
-
-            } catch (err) {
-                alert(err.message);
-                console.error(err);
-            }
+} catch (err) {
+    alert(err.message);
+    console.error(err);
+}
 
         });
-    }
+    }   // ← FIXED: closes the loginBtn if-block
+
 
     // ================= SIGNUP =================
     const signupForm = document.getElementById("signupForm");
@@ -60,8 +61,7 @@ window.location.href = "mood-input-base.html";
                 await signupUser(name, email, password);
 
                 alert("Account created successfully!");
-
-                window.location.href = "lgn-page.html";
+                window.location.href = "login-page.html";
 
             } catch (err) {
                 alert(err.message);
@@ -70,7 +70,8 @@ window.location.href = "mood-input-base.html";
         });
     }
 
-});
+}); // ← closes DOMContentLoaded
+
 export function getUser() {
-    return JSON.parse(localStorage.getItem("user"));
+    return localStorage.getItem("user_id");
 }

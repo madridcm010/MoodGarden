@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (authBtn) {
         authBtn.addEventListener("click", function () {
-            window.location.href = "lgn-page.html";
+            window.location.href = "login-page.html";
         });
     }
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (protectedPages.includes(currentPage) && !isLoggedIn) {
         alert("Please log in first");
-        window.location.href = "lgn-page.html";
+        window.location.href = "login-page.html";
     }
 
 });

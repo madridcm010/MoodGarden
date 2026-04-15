@@ -4,14 +4,10 @@ const BASE_URL = "http://localhost:8000";
 export async function loginUser(email, password) {
     const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
-      headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem("token")}`
-}
-        body: JSON.stringify({
-            email: email,
-            password: password
-        })
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password })
     });
 
     if (!res.ok) {
@@ -25,15 +21,10 @@ export async function loginUser(email, password) {
 export async function signupUser(name, email, password) {
     const res = await fetch(`${BASE_URL}/auth/register`, {
         method: "POST",
-       headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem("token")}`
-}
-        body: JSON.stringify({
-            name: name,
-            email: email,
-            password: password
-        })
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password })
     });
 
     if (!res.ok) {
@@ -45,27 +36,33 @@ export async function signupUser(name, email, password) {
 
 // ================= SUBMIT MOOD =================
 export async function submitMood(mood, note, intensity) {
+    const userId = localStorage.getItem("user_id");
+
+    if (!userId) {
+        throw new Error("User ID missing — user not logged in");
+    }
+
     const response = await fetch(`${BASE_URL}/ai/analyze`, {
         method: "POST",
-      headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem("token")}`
-}
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-            text: `${mood}. ${note}`,
-            intensity: Number(intensity)
-            store_result: true
+            user_id: userId,
+            text: `${mood}. ${note}`
         })
     });
 
     if (!response.ok) {
-        throw new Error("API failed");
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.detail || "API failed");
     }
 
     const data = await response.json();
-
     localStorage.setItem("aiResult", JSON.stringify(data));
 }
+
+
 
 // ================= FETCH MOOD LOGS =================
 export async function fetchMoodLogs() {
@@ -95,14 +92,4 @@ export async function fetchRecommendations() {
     }
 
     return await res.json();
-}
-// ========= DASHBOARD FUNCTIONS ========== //
-export async function fetchMoodLogs() {
-  const res = await fetch("/api/moods");
-  return await res.json();
-}
-
-export async function fetchRecommendations() {
-  const res = await fetch("/api/recommendations");
-  return await res.json();
 }

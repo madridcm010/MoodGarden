@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.exceptions import NotFittedError
+from sqlalchemy import text
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -513,13 +514,15 @@ def save_feedback(result_id: int, user_id: str, helpful: Optional[bool] = None, 
 
 def analyze_mood_text(user_id: str, text: str) -> Dict[str, Any]:
     from .recommender import get_reflections
-
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
     start_time = time.perf_counter()
     cleaned = clean_text(text)
     fallback_used = False
-
+    result_id = cursor.lastrowid;
     if not cleaned:
         return {
+            "result_id": result_id,
             "user_id": user_id,
             "original_text": text,
             "cleaned_text": "",
