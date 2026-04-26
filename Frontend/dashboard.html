@@ -8,9 +8,9 @@
 <body>
 
   <nav class="navbar">
-    <h1>🌿 MoodGarden</h1>
+    <h1>MoodGarden</h1>
     <div>
-      <button id="settingsBtn">⚙️ Settings</button>
+      <button id="settingsBtn">Settings</button>
       <button id="logoutBtn">Logout</button>
     </div>
   </nav>
@@ -18,7 +18,7 @@
   <main class="dashboard">
 
     <section class="welcome">
-      <h2 id="welcomeText">Welcome back 🌱</h2>
+      <h2 id="welcomeText">Welcome back</h2>
     </section>
 
     <!-- Mood Summary -->
@@ -27,43 +27,42 @@
       <p id="todayMood">Loading...</p>
     </section>
 
-
-    
     <section class="stats-container">
+      <div class="stat-card">
+        <div class="stat-icon">&#128578;</div>
+        <h3>Most Common Mood</h3>
+        <p id="mostMood">Happy</p>
+      </div>
 
-  <div class="stat-card">
-    <div class="stat-icon">😊</div>
-    <h3>Most Common Mood</h3>
-    <p id="mostMood">Happy</p>
-  </div>
+      <div class="stat-card">
+        <div class="stat-icon">&#128293;</div>
+        <h3>Current Streak</h3>
+        <p id="streak">5 days</p>
+      </div>
 
-  <div class="stat-card">
-    <div class="stat-icon">🔥</div>
-    <h3>Current Streak</h3>
-    <p id="streak">5 days</p>
-  </div>
+      <div class="stat-card">
+        <div class="stat-icon">&#128197;</div>
+        <h3>Entries This Week</h3>
+        <p id="entries">7</p>
+      </div>
 
-  <div class="stat-card">
-    <div class="stat-icon">📅</div>
-    <h3>Entries This Week</h3>
-    <p id="entries">7</p>
-  </div>
+      <div class="stat-card">
+        <div class="stat-icon">&#128200;</div>
+        <h3>Mood Trend</h3>
+        <p id="trend">Improving</p>
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+    </section>
 
-  <div class="stat-card">
-    <div class="stat-icon">📈</div>
-    <h3>Mood Trend</h3>
-    <p id="trend">Improving</p>
+    <!-- MoodPath Section -->
+    <section class="card moodpath-card">
+      <div id="moodpath-section">
+        <div class="moodpath-loading">Loading your path...</div>
+      </div>
+    </section>
 
-    <div class="progress-bar">
-      <div class="progress" id="progress"></div>
-    </div>
-  </div>
-
-</section>
-
-
-
-    
     <!-- Emotion Analysis -->
     <section class="card">
       <h3>Emotion Analysis</h3>
@@ -81,7 +80,7 @@
       <h3>Recommendations</h3>
       <ul id="recommendations"></ul>
     </section>
-    
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -133,3 +133,590 @@ body.dark .navbar {
     transform: translateY(0);
   }
 }
+
+/* =========================
+   MOODPATH SECTION
+========================= */
+
+.moodpath-card {
+  grid-column: 1 / -1;
+  padding: 2rem;
+}
+
+.moodpath-loading,
+.moodpath-error {
+  text-align: center;
+  color: #888;
+  font-size: 15px;
+  padding: 2rem 0;
+}
+
+.moodpath-header {
+  margin-bottom: 1.5rem;
+}
+
+.moodpath-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.moodpath-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a3a2a;
+  margin: 0 0 0.25rem 0;
+}
+
+.moodpath-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Path selection grid */
+.path-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.path-card {
+  background: #f8faf8;
+  border: 2px solid #e0ece5;
+  border-radius: 14px;
+  padding: 1.25rem;
+  position: relative;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.path-card:hover {
+  border-color: #2f855a;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(47,133,90,0.12);
+}
+
+.path-card--suggested {
+  border-color: #2f855a;
+  background: #f0faf4;
+}
+
+.path-badge {
+  display: inline-block;
+  background: #2f855a;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+
+.path-card-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.path-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a3a2a;
+  margin: 0 0 6px 0;
+}
+
+.path-card-desc {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+.path-card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.path-start-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: #2f855a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.path-start-btn:hover {
+  background: #276749;
+}
+
+.path-change-btn {
+  background: transparent;
+  border: 1.5px solid #ccc;
+  color: #666;
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.path-change-btn:hover {
+  border-color: #2f855a;
+  color: #2f855a;
+}
+
+/* Progress bar */
+.moodpath-progress-bar-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.moodpath-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.moodpath-progress-track {
+  height: 10px;
+  background: #e0ece5;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.moodpath-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #7ed957, #2f855a);
+  border-radius: 10px;
+  transition: width 0.8s ease;
+}
+
+/* Exercise list */
+.exercise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exercise-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f8faf8;
+  border: 1.5px solid #e0ece5;
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+
+.exercise-item--current {
+  border-color: #2f855a;
+  background: #f0faf4;
+}
+
+.exercise-item--done {
+  opacity: 0.65;
+  background: #f5f5f5;
+}
+
+.exercise-item-check {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0ece5;
+  color: #2f855a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.exercise-item--done .exercise-item-check {
+  background: #2f855a;
+  color: white;
+}
+
+.exercise-item--current .exercise-item-check {
+  background: #2f855a;
+  color: white;
+}
+
+.exercise-item-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.exercise-item-icon {
+  font-size: 22px;
+}
+
+.exercise-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a3a2a;
+}
+
+.exercise-item-meta {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+
+.exercise-start-btn {
+  background: #2f855a;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.exercise-start-btn:hover {
+  background: #276749;
+}
+
+.exercise-done-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2f855a;
+  white-space: nowrap;
+}
+
+/* Path complete banner */
+.path-complete-banner {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f0faf4, #e0f5e9);
+  border-radius: 14px;
+  border: 2px solid #2f855a;
+  margin-top: 1.5rem;
+}
+
+.path-complete-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.path-complete-banner h4 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a3a2a;
+  margin: 0 0 6px 0;
+}
+
+.path-complete-banner p {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 16px 0;
+}
+
+.path-complete-banner .path-start-btn {
+  display: inline-block;
+  width: auto;
+  padding: 10px 28px;
+}
+
+/* =========================
+   EXERCISE MODAL
+========================= */
+
+.exercise-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.exercise-modal.hidden {
+  display: none;
+}
+
+.exercise-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(3px);
+}
+
+.exercise-modal-box {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 560px;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.exercise-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.exercise-modal-close:hover {
+  background: #e0e0e0;
+}
+
+.exercise-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1.5rem;
+}
+
+.exercise-modal-icon {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.exercise-modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a3a2a;
+  margin: 0 0 4px 0;
+}
+
+.exercise-modal-meta {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+/* Timer */
+.exercise-timer-display {
+  font-size: 48px;
+  font-weight: 700;
+  text-align: center;
+  color: #2f855a;
+  letter-spacing: 2px;
+  margin-bottom: 0.75rem;
+}
+
+.exercise-timer-controls {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.timer-btn {
+  background: #2f855a;
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.timer-btn:hover {
+  background: #276749;
+}
+
+/* Steps */
+.exercise-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.exercise-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.exercise-step-num {
+  min-width: 28px;
+  height: 28px;
+  background: #e0ece5;
+  color: #2f855a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.exercise-step-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Rating */
+.exercise-rating-section {
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.exercise-rating-label {
+  font-size: 14px;
+  color: #555;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.exercise-rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.15s, transform 0.1s;
+  padding: 0;
+}
+
+.star-btn:hover,
+.star-btn--active {
+  color: #f6a623;
+}
+
+.star-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Complete button */
+.exercise-complete-btn {
+  width: 100%;
+  padding: 14px 0;
+  background: #2f855a;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.exercise-complete-btn:hover {
+  background: #276749;
+}
+
+/* Dark mode adjustments */
+body.dark .moodpath-card,
+body.dark .path-card,
+body.dark .exercise-item,
+body.dark .exercise-modal-box {
+  background-color: #2a2a2a;
+  border-color: #3a4a3a;
+  color: white;
+}
+
+body.dark .path-card-title,
+body.dark .exercise-item-title,
+body.dark .exercise-modal-title,
+body.dark .moodpath-title {
+  color: #d0f0d0;
+}
+
+body.dark .path-card-desc,
+body.dark .moodpath-subtitle,
+body.dark .exercise-item-meta,
+body.dark .exercise-step-text {
+  color: #aaa;
+}
+
+body.dark .path-card {
+  background: #222;
+}
+
+body.dark .path-card--suggested,
+body.dark .exercise-item--current {
+  background: #1a2e1a;
+}
+
+body.dark .exercise-modal-close {
+  background: #444;
+  color: #ddd;
+}
+
+body.dark .exercise-modal-close:hover {
+  background: #555;
+}
+
+body.dark .path-change-btn {
+  border-color: #555;
+  color: #aaa;
+}
+
+body.dark .moodpath-progress-track {
+  background: #3a4a3a;
+}
+
+body.dark .exercise-item--done {
+  background: #222;
+  border-color: #333;
+}
+
+body.dark .stats-container .stat-card {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+body.dark .stat-card h3 {
+  color: #aaa;
+}
+
+body.dark .stat-card p {
+  color: #eee;
+}
