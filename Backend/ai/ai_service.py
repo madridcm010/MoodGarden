@@ -1,3 +1,9 @@
+# ==========================================================
+# PART 0: IMPORTS
+# These are the libraries used for the local AI model,
+# database storage, timing, and text cleaning.
+# ==========================================================
+
 import os
 import re
 import time
@@ -9,39 +15,238 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.exceptions import NotFittedError
-from sqlalchemy import text
 
+
+# ==========================================================
+# PART 1: FILE PATHS
+# DB_PATH stores AI mood history.
+# MODEL_PATH stores the trained local AI model.
+# ==========================================================
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB_PATH = os.path.join(BASE_DIR, "moodgarden.db")
 MODEL_PATH = os.path.join(BASE_DIR, "emotion_model.joblib")
 
 
+# ==========================================================
+# PART 2: DEFAULT TRAINING DATA
+# This teaches the AI how to recognize emotions.
+# Format:
+# ("example user sentence", "emotion_label")
+# ==========================================================
+
 DEFAULT_TRAINING_DATA: List[Tuple[str, str]] = [
+
+    # ================= HAPPY =================
     ("I feel happy and excited today", "happy"),
-    ("I am feeling really sad and alone", "sad"),
+    ("I am in a really good mood", "happy"),
+    ("Today has been great", "happy"),
+    ("I feel joyful and positive", "happy"),
+    ("I feel good about myself", "happy"),
+    ("I am smiling a lot today", "happy"),
+    ("I feel proud and thankful", "happy"),
+    ("Everything feels good right now", "happy"),
+    ("I feel excited for what is coming next", "happy"),
+    ("I am having a really nice day", "happy"),
+
+    # ================= SAD =================
+    ("I feel really sad and alone", "sad"),
+    ("I feel down today", "sad"),
+    ("I feel empty and hurt", "sad"),
+    ("I have been crying and feeling low", "sad"),
+    ("I do not feel like myself today", "sad"),
+    ("I feel like nothing is going right", "sad"),
+    ("I feel heartbroken", "sad"),
+    ("I just want to be alone", "sad"),
+    ("I feel low and tired emotionally", "sad"),
+    ("I feel like giving up on today", "sad"),
+
+    # ================= STRESSED =================
     ("I am stressed out and overwhelmed", "stressed"),
+    ("I feel a lot of pressure right now", "stressed"),
+    ("School is stressing me out", "stressed"),
+    ("I have too much going on", "stressed"),
+    ("I feel like I have too many responsibilities", "stressed"),
+    ("I am worried about getting everything done", "stressed"),
+    ("I feel tense because of deadlines", "stressed"),
+    ("I cannot relax because I have too much work", "stressed"),
+    ("Everything feels like pressure right now", "stressed"),
+    ("I am stressed because I have so much to do", "stressed"),
+
+    # ================= ANXIOUS =================
     ("I feel nervous and worried about everything", "anxious"),
+    ("I am anxious right now", "anxious"),
+    ("I feel scared and uneasy", "anxious"),
+    ("My mind will not slow down", "anxious"),
+    ("I keep overthinking everything", "anxious"),
+    ("I feel nervous for no reason", "anxious"),
+    ("I am worried something bad will happen", "anxious"),
+    ("I feel panicked and uncomfortable", "anxious"),
+    ("I cannot stop worrying", "anxious"),
+    ("My thoughts are racing", "anxious"),
+
+    # ================= ANGRY =================
     ("I am angry and frustrated right now", "angry"),
+    ("I feel mad", "angry"),
+    ("I am really upset", "angry"),
+    ("This made me angry", "angry"),
+    ("I feel irritated by everything", "angry"),
+    ("I am mad about what happened", "angry"),
+    ("I feel like yelling", "angry"),
+    ("I am annoyed and upset", "angry"),
+    ("I feel heated right now", "angry"),
+    ("I am angry because things are unfair", "angry"),
+
+    # ================= CALM =================
     ("I feel calm and peaceful", "calm"),
+    ("I feel relaxed", "calm"),
+    ("I feel steady and okay", "calm"),
+    ("I am at peace right now", "calm"),
+    ("I feel balanced today", "calm"),
+    ("I feel clear and relaxed", "calm"),
+    ("My mind feels quiet", "calm"),
+    ("I feel comfortable and safe", "calm"),
+    ("I am feeling peaceful today", "calm"),
+    ("I feel like I can breathe easily", "calm"),
+
+    # ================= BURNOUT =================
     ("I am burnt out and mentally tired", "burnout"),
+    ("I feel burned out", "burnout"),
+    ("I feel mentally drained", "burnout"),
+    ("I have no energy left", "burnout"),
+    ("I feel tired of everything", "burnout"),
+    ("I cannot keep pushing myself", "burnout"),
+    ("I feel like I need a long break", "burnout"),
+    ("I am exhausted from doing too much", "burnout"),
+    ("I feel like I am running on empty", "burnout"),
+    ("I am mentally worn out", "burnout"),
+
+    # ================= UNMOTIVATED =================
     ("I feel unmotivated and stuck", "unmotivated"),
+    ("I do not feel like doing anything", "unmotivated"),
+    ("I cannot get started", "unmotivated"),
+    ("I feel lazy and stuck", "unmotivated"),
+    ("I have no motivation today", "unmotivated"),
+    ("I keep putting things off", "unmotivated"),
+    ("I do not want to work on anything", "unmotivated"),
+    ("I feel stuck and do not know how to begin", "unmotivated"),
+    ("I know what I need to do but cannot start", "unmotivated"),
+    ("I feel like doing nothing today", "unmotivated"),
+
+    # ================= LONELY =================
     ("I feel lonely and disconnected", "lonely"),
+    ("I feel alone", "lonely"),
+    ("I feel isolated", "lonely"),
+    ("Nobody understands me", "lonely"),
+    ("I feel like I have no one to talk to", "lonely"),
+    ("I feel left out", "lonely"),
+    ("I feel disconnected from everyone", "lonely"),
+    ("I wish someone would check on me", "lonely"),
+    ("I feel forgotten", "lonely"),
+    ("I feel like I am by myself", "lonely"),
+
+    # ================= CONFUSED =================
     ("I am confused and unsure what to do", "confused"),
+    ("I feel lost", "confused"),
+    ("I do not know what to do", "confused"),
+    ("Everything feels unclear", "confused"),
+    ("I am not sure what is happening", "confused"),
+    ("I feel stuck because I do not understand", "confused"),
+    ("I do not know which choice to make", "confused"),
+    ("I feel unsure about my next step", "confused"),
+    ("I am having trouble figuring this out", "confused"),
+    ("My thoughts feel messy and unclear", "confused"),
+
+    # ================= HOPEFUL =================
     ("I feel hopeful about things getting better", "hopeful"),
+    ("I think things will improve", "hopeful"),
+    ("I feel optimistic", "hopeful"),
+    ("I still have hope", "hopeful"),
+    ("I feel like things can get better", "hopeful"),
+    ("I believe tomorrow can be better", "hopeful"),
+    ("I feel positive about the future", "hopeful"),
+    ("I am starting to feel hopeful again", "hopeful"),
+    ("I think I can get through this", "hopeful"),
+    ("I feel like there is still a chance", "hopeful"),
+
+    # ================= GUILTY =================
     ("I feel guilty about what happened", "guilty"),
+    ("I regret what I did", "guilty"),
+    ("I feel bad about my actions", "guilty"),
+    ("I cannot stop feeling guilty", "guilty"),
+    ("I wish I handled things differently", "guilty"),
+    ("I feel responsible for what went wrong", "guilty"),
+    ("I keep thinking about my mistake", "guilty"),
+    ("I feel bad for hurting someone", "guilty"),
+    ("I feel like I should have done better", "guilty"),
+    ("I regret the way I acted", "guilty"),
+
+    # ================= ASHAMED =================
     ("I feel ashamed of myself", "ashamed"),
+    ("I feel embarrassed and ashamed", "ashamed"),
+    ("I am disappointed in myself", "ashamed"),
+    ("I feel like hiding", "ashamed"),
+    ("I feel bad about who I am right now", "ashamed"),
+    ("I feel like I messed everything up", "ashamed"),
+    ("I do not feel proud of myself", "ashamed"),
+    ("I feel embarrassed about what happened", "ashamed"),
+    ("I feel like I failed myself", "ashamed"),
+    ("I am being really hard on myself", "ashamed"),
+
+    # ================= TIRED =================
     ("I feel exhausted and worn out", "tired"),
+    ("I am really tired", "tired"),
+    ("I feel drained", "tired"),
+    ("I need sleep and rest", "tired"),
+    ("I feel physically tired", "tired"),
+    ("I have no energy today", "tired"),
+    ("I feel sleepy and slow", "tired"),
+    ("My body feels tired", "tired"),
+    ("I need a break because I am tired", "tired"),
+    ("I feel worn out from the day", "tired"),
+
+    # ================= FRUSTRATED =================
     ("I feel frustrated because nothing is going right", "frustrated"),
+    ("I am frustrated", "frustrated"),
+    ("This is annoying me", "frustrated"),
+    ("Nothing is working", "frustrated"),
+    ("I feel stuck and irritated", "frustrated"),
+    ("I keep trying but it is not working", "frustrated"),
+    ("I feel annoyed with this situation", "frustrated"),
+    ("I am frustrated because I cannot fix this", "frustrated"),
+    ("This problem is getting on my nerves", "frustrated"),
+    ("I feel irritated because things are not going my way", "frustrated"),
+
+    # ================= OVERWHELMED =================
     ("I feel overwhelmed with school and life", "overwhelmed"),
-    ("I feel good and confident today", "happy"),
-    ("I feel down and empty", "sad"),
-    ("I am under a lot of pressure", "stressed"),
-    ("I am uneasy and scared", "anxious"),
+    ("Everything feels like too much", "overwhelmed"),
+    ("I cannot handle all of this", "overwhelmed"),
+    ("I am overwhelmed right now", "overwhelmed"),
+    ("Too many things are happening at once", "overwhelmed"),
+    ("I feel like I am drowning in responsibilities", "overwhelmed"),
+    ("I do not know where to start", "overwhelmed"),
+    ("Everything is hitting me at once", "overwhelmed"),
+    ("I feel like I have too much on my plate", "overwhelmed"),
+    ("I cannot keep up with everything", "overwhelmed"),
+
+    # ================= MOTIVATED =================
     ("I feel ready to get things done", "motivated"),
     ("I feel focused and productive", "motivated"),
+    ("I am motivated today", "motivated"),
+    ("I am ready to work", "motivated"),
+    ("I feel determined", "motivated"),
+    ("I want to get better and improve", "motivated"),
+    ("I feel like making progress today", "motivated"),
+    ("I am ready to start working on my goals", "motivated"),
+    ("I feel productive and focused", "motivated"),
+    ("I want to keep pushing forward", "motivated"),
 ]
 
+
+# ==========================================================
+# PART 3: EMOTIONAL TONE MAP
+# Converts the predicted emotion into a tone word.
+# ==========================================================
 
 TONE_MAP = {
     "happy": "uplifted",
@@ -63,6 +268,13 @@ TONE_MAP = {
     "motivated": "driven",
     "neutral": "balanced",
 }
+
+
+# ==========================================================
+# PART 4: PERSONALIZED RECOMMENDATION BANK
+# These are used to give user-specific recommendations.
+# Helpful feedback makes the app reuse better suggestions.
+# ==========================================================
 
 RECOMMENDATION_BANK = {
     "happy": [
@@ -158,8 +370,18 @@ RECOMMENDATION_BANK = {
 }
 
 
+# ==========================================================
+# PART 5: GLOBAL MODEL VARIABLE
+# Keeps the loaded model in memory so it does not reload every time.
+# ==========================================================
+
 classifier = None
 
+
+# ==========================================================
+# PART 6: DATABASE SETUP
+# Creates the AI results, training data, and feedback tables.
+# ==========================================================
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -210,6 +432,11 @@ def init_db():
     seed_training_data_if_needed()
 
 
+# ==========================================================
+# PART 7: SEED TRAINING DATA
+# Adds default training data one time if the table is empty.
+# ==========================================================
+
 def seed_training_data_if_needed():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -227,12 +454,22 @@ def seed_training_data_if_needed():
     conn.close()
 
 
+# ==========================================================
+# PART 8: TEXT CLEANING
+# Makes user text lowercase and removes unwanted symbols.
+# ==========================================================
+
 def clean_text(text: str) -> str:
     text = text.strip().lower()
     text = re.sub(r"\s+", " ", text)
     text = re.sub(r"[^a-zA-Z0-9\s.,!?'-]", "", text)
     return text
 
+
+# ==========================================================
+# PART 9: SENTIMENT NORMALIZATION
+# Converts emotion labels into positive, negative, or neutral.
+# ==========================================================
 
 def normalize_sentiment(emotion: str) -> str:
     positive_emotions = {"happy", "calm", "hopeful", "motivated"}
@@ -249,6 +486,11 @@ def normalize_sentiment(emotion: str) -> str:
     return "neutral"
 
 
+# ==========================================================
+# PART 10: LOAD TRAINING DATA
+# Gets training examples from the SQLite database.
+# ==========================================================
+
 def load_training_data_from_db() -> List[Tuple[str, str]]:
     init_db()
     conn = sqlite3.connect(DB_PATH)
@@ -258,6 +500,7 @@ def load_training_data_from_db() -> List[Tuple[str, str]]:
         SELECT training_text, emotion_label
         FROM emotion_training_data
     """)
+
     rows = cursor.fetchall()
     conn.close()
 
@@ -266,6 +509,12 @@ def load_training_data_from_db() -> List[Tuple[str, str]]:
 
     return [(row[0], row[1]) for row in rows]
 
+
+# ==========================================================
+# PART 11: GET LOCAL AI MODEL
+# Loads existing model if available.
+# Otherwise trains a new local model.
+# ==========================================================
 
 def get_model() -> Pipeline:
     global classifier
@@ -289,8 +538,14 @@ def get_model() -> Pipeline:
     pipeline.fit(texts, labels)
     joblib.dump(pipeline, MODEL_PATH)
     classifier = pipeline
+
     return classifier
 
+
+# ==========================================================
+# PART 12: RETRAIN MODEL
+# Retrains the local model when new feedback is added.
+# ==========================================================
 
 def retrain_model():
     global classifier
@@ -309,25 +564,40 @@ def retrain_model():
     classifier = pipeline
 
 
+# ==========================================================
+# PART 13: ADD TRAINING EXAMPLE
+# Adds corrected feedback as new training data.
+# This is how the AI learns from feedback.
+# ==========================================================
+
 def add_training_example(text: str, label: str):
     init_db()
+
     cleaned = clean_text(text)
     label = label.strip().lower()
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
+
     cursor.execute("""
         INSERT INTO emotion_training_data (training_text, emotion_label)
         VALUES (?, ?)
     """, (cleaned, label))
+
     conn.commit()
     conn.close()
 
     retrain_model()
 
 
+# ==========================================================
+# PART 14: SAVE AI RESULT
+# Saves the user's mood entry and AI result.
+# ==========================================================
+
 def save_result_to_db(result_data: Dict[str, Any]) -> int:
     init_db()
+
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -344,9 +614,8 @@ def save_result_to_db(result_data: Dict[str, Any]) -> int:
             supportive_reflection,
             recommendation,
             fallback_used,
-            processing_time_ms,
-            user_selected_mood
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            processing_time_ms
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         result_data["user_id"],
         result_data["original_text"],
@@ -359,23 +628,32 @@ def save_result_to_db(result_data: Dict[str, Any]) -> int:
         result_data["supportive_reflection"],
         result_data["recommendation"],
         1 if result_data["fallback_used"] else 0,
-        result_data["processing_time_ms"],
-        result_data.get("user_selected_mood")  # ⭐ SAFE ACCESS
+        result_data["processing_time_ms"]
     ))
 
     result_id = cursor.lastrowid
+
     conn.commit()
     conn.close()
+
     return result_id
+
+
+# ==========================================================
+# PART 15: GET RESULT BY ID
+# Finds one saved AI result.
+# ==========================================================
 
 def get_result_by_id(result_id: int) -> Optional[Dict[str, Any]]:
     init_db()
+
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM ai_results WHERE id = ?", (result_id,))
     row = cursor.fetchone()
+
     conn.close()
 
     if row is None:
@@ -384,19 +662,34 @@ def get_result_by_id(result_id: int) -> Optional[Dict[str, Any]]:
     return dict(row)
 
 
+# ==========================================================
+# PART 16: GET ALL RESULTS
+# Returns all AI mood entries.
+# ==========================================================
+
 def get_saved_results():
     init_db()
+
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
+
     cursor.execute("SELECT * FROM ai_results ORDER BY created_at DESC")
     rows = cursor.fetchall()
+
     conn.close()
+
     return [dict(row) for row in rows]
 
 
+# ==========================================================
+# PART 17: GET USER HISTORY
+# Returns mood history for one user.
+# ==========================================================
+
 def get_user_history(user_id: str):
     init_db()
+
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -407,21 +700,29 @@ def get_user_history(user_id: str):
         WHERE user_id = ?
         ORDER BY created_at DESC
     """, (user_id,))
+
     rows = cursor.fetchall()
     conn.close()
 
     return [dict(row) for row in rows]
 
 
+# ==========================================================
+# PART 18: GET USER SUMMARY
+# Counts emotions and shows recent history for one user.
+# ==========================================================
+
 def get_user_summary(user_id: str) -> Dict[str, Any]:
     history = get_user_history(user_id)
 
     emotion_counts: Dict[str, int] = {}
+
     for item in history:
         emotion = item["mood_category"]
         emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
 
     most_common = None
+
     if emotion_counts:
         most_common = max(emotion_counts, key=emotion_counts.get)
 
@@ -434,8 +735,18 @@ def get_user_summary(user_id: str) -> Dict[str, Any]:
     }
 
 
+# ==========================================================
+# PART 19: PERSONALIZED RECOMMENDATION
+# Picks a recommendation based on user history and feedback.
+# ==========================================================
+
 def choose_personalized_recommendation(user_id: str, mood_category: str) -> str:
-    options = RECOMMENDATION_BANK.get(mood_category, RECOMMENDATION_BANK["neutral"])
+    init_db()
+
+    options = RECOMMENDATION_BANK.get(
+        mood_category,
+        RECOMMENDATION_BANK["neutral"]
+    )
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -460,6 +771,7 @@ def choose_personalized_recommendation(user_id: str, mood_category: str) -> str:
             return best_recommendation
 
     history = get_user_history(user_id)
+
     used_recommendations = [
         item["recommendation"]
         for item in history
@@ -473,14 +785,27 @@ def choose_personalized_recommendation(user_id: str, mood_category: str) -> str:
     return options[0]
 
 
-def save_feedback(result_id: int, user_id: str, helpful: Optional[bool] = None, correct_label: Optional[str] = None):
+# ==========================================================
+# PART 20: SAVE FEEDBACK
+# Saves whether recommendation helped.
+# If correct_label is given, the model automatically learns.
+# ==========================================================
+
+def save_feedback(
+    result_id: int,
+    user_id: str,
+    helpful: Optional[bool] = None,
+    correct_label: Optional[str] = None
+):
     init_db()
 
     result = get_result_by_id(result_id)
+
     if result is None:
         raise ValueError("Result not found.")
 
     helpful_value = None
+
     if helpful is not None:
         helpful_value = 1 if helpful else 0
 
@@ -493,6 +818,8 @@ def save_feedback(result_id: int, user_id: str, helpful: Optional[bool] = None, 
     """, (result_id, user_id, helpful_value, correct_label))
 
     if correct_label:
+        correct_label = correct_label.strip().lower()
+
         cursor.execute("""
             UPDATE ai_results
             SET mood_category = ?,
@@ -500,9 +827,9 @@ def save_feedback(result_id: int, user_id: str, helpful: Optional[bool] = None, 
                 emotional_tone = ?
             WHERE id = ?
         """, (
-            correct_label.strip().lower(),
-            normalize_sentiment(correct_label.strip().lower()),
-            TONE_MAP.get(correct_label.strip().lower(), "balanced"),
+            correct_label,
+            normalize_sentiment(correct_label),
+            TONE_MAP.get(correct_label, "balanced"),
             result_id
         ))
 
@@ -510,21 +837,25 @@ def save_feedback(result_id: int, user_id: str, helpful: Optional[bool] = None, 
     conn.close()
 
     if correct_label:
-        add_training_example(result["cleaned_text"], correct_label.strip().lower())
+        add_training_example(result["cleaned_text"], correct_label)
 
 
-def analyze_mood_text(user_id: str, text: str, user_selected_mood: str = None) -> Dict[str, Any]:
+# ==========================================================
+# PART 21: ANALYZE MOOD TEXT
+# Main AI function.
+# Takes user_id and text, predicts emotion, saves result,
+# and returns personalized recommendation.
+# ==========================================================
 
+def analyze_mood_text(user_id: str, text: str) -> Dict[str, Any]:
     from .recommender import get_reflections
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+
     start_time = time.perf_counter()
     cleaned = clean_text(text)
     fallback_used = False
-    result_id = cursor.lastrowid;
+
     if not cleaned:
         return {
-            "result_id": result_id,
             "user_id": user_id,
             "original_text": text,
             "cleaned_text": "",
@@ -543,21 +874,34 @@ def analyze_mood_text(user_id: str, text: str, user_selected_mood: str = None) -
         model = get_model()
         probabilities = model.predict_proba([cleaned])[0]
         classes = model.classes_
+
         predicted_index = probabilities.argmax()
-        mood_category = str(classes[predicted_index])
+        predicted_mood = str(classes[predicted_index])
         confidence = round(float(probabilities[predicted_index]), 3)
 
     except (NotFittedError, Exception):
         retrain_model()
+
         model = get_model()
         probabilities = model.predict_proba([cleaned])[0]
         classes = model.classes_
+
         predicted_index = probabilities.argmax()
-        mood_category = str(classes[predicted_index])
+        predicted_mood = str(classes[predicted_index])
         confidence = round(float(probabilities[predicted_index]), 3)
         fallback_used = True
 
-    if confidence < 0.20:
+    # ======================================================
+    # PART 22: LOW CONFIDENCE FALLBACK
+    # Only returns neutral if the AI is very unsure.
+    # Lowered from 0.55 to 0.30 so it does not overuse neutral.
+    # ======================================================
+
+    mood_category = predicted_mood
+
+    if confidence < 0.30:
+        mood_category = "neutral"
+        confidence = 0.50
         fallback_used = True
 
     sentiment = normalize_sentiment(mood_category)
@@ -566,21 +910,21 @@ def analyze_mood_text(user_id: str, text: str, user_selected_mood: str = None) -
     recommendation = choose_personalized_recommendation(user_id, mood_category)
 
     response = {
-    "user_id": user_id,
-    "original_text": text,
-    "cleaned_text": cleaned,
-    "sentiment": sentiment,
-    "mood_category": mood_category,
-    "emotional_tone": emotional_tone,
-    "confidence": confidence,
-    "short_reflection": reflections["short_reflection"],
-    "supportive_reflection": reflections["supportive_reflection"],
-    "recommendation": recommendation,
-    "fallback_used": fallback_used,
-    "processing_time_ms": round((time.perf_counter() - start_time) * 1000, 2),
-    "user_selected_mood": user_selected_mood  # ⭐ NEW
-}
+        "user_id": user_id,
+        "original_text": text,
+        "cleaned_text": cleaned,
+        "sentiment": sentiment,
+        "mood_category": mood_category,
+        "emotional_tone": emotional_tone,
+        "confidence": confidence,
+        "short_reflection": reflections["short_reflection"],
+        "supportive_reflection": reflections["supportive_reflection"],
+        "recommendation": recommendation,
+        "fallback_used": fallback_used,
+        "processing_time_ms": round((time.perf_counter() - start_time) * 1000, 2)
+    }
 
     result_id = save_result_to_db(response)
     response["result_id"] = result_id
+
     return response
