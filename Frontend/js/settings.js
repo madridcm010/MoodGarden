@@ -1,30 +1,56 @@
 // CHANGE EMAIL
-document.getElementById("changeEmailBtn").addEventListener("click", () => {
+import { getUser } from "./auth.js";
+
+// CHANGE EMAIL
+document.getElementById("changeEmailBtn").addEventListener("click", async () => {
     const email = document.getElementById("newEmail").value;
+    const userId = getUser();
 
     if (!email) {
         alert("Please enter a new email");
         return;
     }
 
-    // TODO: connect to backend
-    console.log("Updating email to:", email);
-    alert("Email updated (demo)");
+    const res = await fetch("http://127.0.0.1:8000/settings/update-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId, new_email: email })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        alert("Email updated successfully!");
+    } else {
+        alert(data.detail || "Error updating email");
+    }
 });
 
 // CHANGE PASSWORD
-document.getElementById("changePasswordBtn").addEventListener("click", () => {
+document.getElementById("changePasswordBtn").addEventListener("click", async () => {
     const password = document.getElementById("newPassword").value;
+    const userId = getUser();
 
     if (!password) {
         alert("Please enter a new password");
         return;
     }
 
-    // TODO: connect to backend
-    console.log("Updating password");
-    alert("Password updated (demo)");
+    const res = await fetch("http://127.0.0.1:8000/settings/update-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId, new_password: password })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        alert("Password updated successfully!");
+    } else {
+        alert(data.detail || "Error updating password");
+    }
 });
+
 
 // DARK MODE
 const toggle = document.getElementById("darkModeToggle");

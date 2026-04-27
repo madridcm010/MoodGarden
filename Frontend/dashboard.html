@@ -31,10 +31,14 @@
 
     <!-- MoodPath Section -->
     <section class="card moodpath-launch">
-      <h3>MoodPath</h3>
-      <p>Explore exercises and hobbies to stay in your current mood.</p>
-      <button id="openMoodPath" class="primary-btn">Open MoodPath</button>
-    </section>
+  <h3>MoodPath</h3>
+  <p>Explore various paths to stay in your current mood.</p>
+  <button id="openMoodPath" class="primary-btn">Open MoodPath</button>
+
+  <!-- ⭐ REQUIRED for dashboard.js -->
+  <div id="moodpath-section"></div>
+</section>
+
 
     <!-- Emotion Analysis -->
     <section class="card">
@@ -42,6 +46,10 @@
       <canvas id="emotionChart"></canvas>
     </section>
 
+    <section class="card heatmap-card">
+    <h3>Mood Heatmap</h3>
+    <div id="moodHeatmap" class="heatmap-grid"></div>
+    </section>
     <!-- Recent Logs -->
     <section class="card">
       <h3>Recent Logs</h3>
@@ -58,6 +66,38 @@
       <p>Record how you're feeling right now.</p>
       <button id="newEntryBtn" class="primary-btn">New Mood Entry</button>
     </section>
+    <section class="stats-container">
+
+      <div class="stat-card">
+        <div class="stat-icon">😊</div>
+        <h3>Most Common Mood</h3>
+        <p id="mostMood">Happy</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <h3>Current Streak</h3>
+        <p id="streak">5 days</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <h3>Entries This Week</h3>
+        <p id="entries">7</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <h3>Mood Trend</h3>
+        <p id="trend">Improving</p>
+
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+
+    </section>
+
 
   </main>
 

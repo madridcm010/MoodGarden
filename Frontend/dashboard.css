@@ -123,3 +123,146 @@ body.dark .moodpath-launch button {
 body.dark .new-entry-card button {
   background: #3a9d6f;
 }
+/* =========================
+   STAT CARDS
+========================= */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 large columns */
+  gap: 25px;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.stat-card {
+  background: white;
+  padding: 30px; /* bigger padding */
+  border-radius: 20px; /* larger radius for a premium look */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+  min-height: 160px; /* makes them taller */
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+}
+
+.stat-card p {
+  font-size: 26px; /* bigger text */
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* progress bar */
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #eee;
+  border-radius: 10px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #7ed957, #4facfe);
+  border-radius: 10px;
+  transition: width 1s ease;
+}
+body.dark .progress-bar {
+  background: #3a3a3a; /* softer dark gray */
+}
+
+body.dark .progress {
+  background: linear-gradient(to right, #48bb78, #4299e1); 
+  /* calmer green → blue gradient for dark mode */
+}
+
+/* animation */
+
+.stat-card {
+  animation: fadeUp 0.5s ease forwards;
+}
+/* Dark mode for stat cards */
+body.dark .stat-card {
+  background: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
+
+body.dark .stat-card h3 {
+  color: #e2e8f0;
+}
+
+body.dark .stat-card p {
+  color: #f7fafc;
+}
+
+body.dark .stat-icon {
+  color: #e2e8f0;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ============================
+   MOOD HEATMAP
+============================ */
+
+.heatmap-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 days */
+  gap: 6px;
+  margin-top: 15px;
+
+  width: 100%;
+  max-width: 420px;   /* wider so all 7 columns fit */
+  min-height: 300px;  /* forces 5 rows to appear */
+}
+
+
+.heatmap-cell {
+  width: 100%;
+  padding-bottom: 100%; /* perfect square */
+  border-radius: 6px;
+  background: #e2e8f0;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.1);
+}
+
+/* Mood colors */
+.hm-happy { background: #7ed957; }
+.hm-calm { background: #4facfe; }
+.hm-neutral { background: #cbd5e0; }
+.hm-sad { background: #f6a623; }
+.hm-angry { background: #e05252; }
+.hm-anxious { background: #9f7aea; }
+.hm-unknown { background: #a0aec0; }
+
+/* Dark mode */
+body.dark .heatmap-cell {
+  background: #2d3748;
+}

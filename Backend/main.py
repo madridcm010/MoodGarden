@@ -9,6 +9,7 @@ from auth import verify_password
 from schemas import UserRegister, UserLogin, UserProfile
 from ai.router import router as ai_router
 from ai.ai_service import init_db
+from settings_router import router as settings_router
 app = FastAPI()
 
 # -------------------------
@@ -53,7 +54,12 @@ def login(data: UserLogin, db: Session = Depends(get_db)):
     if not user or not verify_password(data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
-    return {"message": "Login successful", "user_id": user.id}
+    return {
+        "message": "Login successful",
+        "user_id": user.id,
+        "username": user.name
+    }
+
 
 @app.get("/api/moods/{userId}")
 def get_moods(userId: int, db: Session = Depends(get_db)):
@@ -65,7 +71,7 @@ def get_moods(userId: int, db: Session = Depends(get_db)):
 # -------------------------
 app.include_router(ai_router)
 app.include_router(router)
-
+app.include_router(settings_router)
 # -------------------------
 # TEST DB
 # -------------------------

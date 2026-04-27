@@ -1,7 +1,29 @@
-import { getUser } from './auth.js';
+import { getUser,getUsername } from './auth.js';
 import { fetchMoodLogs, fetchRecommendations } from './api.js';
+const moodColors = {
+  happy: "#7ed957",
+  sad: "#f6a623",
+  stressed: "#ff6b6b",
+  anxious: "#9f7aea",
+  angry: "#e05252",
+  calm: "#4facfe",
+  burnout: "#8d99ae",
+  unmotivated: "#a0aec0",
+  lonely: "#6c757d",
+  confused: "#f9ca24",
+  hopeful: "#81e6d9",
+  guilty: "#f4a261",
+  ashamed: "#e76f51",
+  tired: "#b08968",
+  frustrated: "#d62828",
+  overwhelmed: "#e5989b",
+  motivated: "#48bb78",
+  neutral: "#cbd5e0",
+  unknown: "#a0aec0"
+};
 
 document.addEventListener("DOMContentLoaded", async () => {
+
   const userId = getUser();
 
   if (!userId) {
@@ -9,8 +31,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  const username = getUsername();
   document.getElementById("welcomeText").innerText =
-    `Welcome back 🌱 (User ${userId})`;
+    `Welcome back 🌱 ${username}`;
 
   loadDashboard(userId);
 });
@@ -33,6 +56,8 @@ async function loadDashboard(userId) {
 
     const currentMood = logs[0]?.user_selected_mood || logs[0]?.mood_category || null;
     renderMoodPath(currentMood);
+    updateStats(logs);
+    renderHeatmap(logs);
 
   } catch (err) {
     console.error("DASHBOARD ERROR:", err);
@@ -44,38 +69,28 @@ async function loadDashboard(userId) {
    MOODPATH SYSTEM
 ========================= */
 
-function renderMoodPath(mood) {
+function renderMoodPath(currentMood) {
   const container = document.getElementById("moodpath-section");
 
-  if (!mood) {
-    container.innerHTML = `
-            <p>No mood logged today.</p>
-            <p>Log a mood to get a personalized path.</p>
-        `;
-    return;
-  }
+  
 
-  const exercises = getExercisePath(mood);
-  const hobbies = getHobbyPath(mood);
+  const exercises = getExercisePath(currentMood);
+  const hobbies = getHobbyPath(currentMood);
 
   container.innerHTML = `
-        <p>You are currently feeling <strong>${mood}</strong>.</p>
-        <p>Choose a path to stay in this mood:</p>
+        <p>You are currently feeling <strong>${currentMood}</strong>.</p>
+        
 
         <div class="path-options">
 
             <div class="path-card" id="exercisePath">
-                <h4>Exercise Path 🏃‍♂️</h4>
-                <ul>
-                    ${exercises.map(step => `<li>${step}</li>`).join("")}
-                </ul>
+               
+                
             </div>
 
             <div class="path-card" id="hobbyPath">
-                <h4>Hobby Path 🎨</h4>
-                <ul>
-                    ${hobbies.map(step => `<li>${step}</li>`).join("")}
-                </ul>
+                
+                
             </div>
 
         </div>
@@ -157,7 +172,6 @@ function displayRecommendations(data) {
 
   const recommendations = [
     `You logged ${total} moods`,
-    `Your most common emotion is: ${emotion}`,
     `Recent trend: ${emotion === "neutral"
       ? "Try adding more emotional detail"
       : "Good emotional awareness!"
@@ -192,7 +206,7 @@ function renderChart(logs) {
   // Count moods
   const moodCounts = {};
   logs.forEach(log => {
-    const mood = log.user_selected_mood || log.mood_category || "unknown";
+    const mood = (log.user_selected_mood || log.mood_category || "unknown").toLowerCase();
     moodCounts[mood] = (moodCounts[mood] || 0) + 1;
   });
 
@@ -207,10 +221,9 @@ function renderChart(logs) {
       labels: Object.keys(moodCounts),
       datasets: [{
         data: Object.values(moodCounts),
-        backgroundColor: [
-          '#7ed957', '#4facfe', '#f6a623',
-          '#e05252', '#a8d8a8', '#f9ca24'
-        ],
+        backgroundColor: Object.keys(moodCounts).map(mood =>
+          moodColors[mood] || moodColors.unknown
+        ),
         borderWidth: 1
       }]
     },
@@ -221,6 +234,158 @@ function renderChart(logs) {
     }
   });
 }
+
+
+/* =========================
+   📊 STAT CARDS
+========================= */
+
+function updateStats(logs) {
+  if (!logs || logs.length === 0) return;
+
+  updateMostCommonMood(logs);
+  updateEntriesThisWeek(logs);
+  updateStreak(logs);
+  updateTrend(logs);
+  renderHeatmap(logs);
+}
+
+
+// 😊 MOST COMMON MOOD
+function updateMostCommonMood(logs) {
+  const counts = {};
+
+  logs.forEach(log => {
+    const mood = log.user_selected_mood || log.mood_category || "unknown";
+    counts[mood] = (counts[mood] || 0) + 1;
+  });
+
+  const mostCommon = Object.keys(counts).reduce((a, b) =>
+    counts[a] > counts[b] ? a : b
+  );
+
+  document.getElementById("mostMood").innerText = mostCommon;
+}
+
+
+// 📅 ENTRIES THIS WEEK
+function updateEntriesThisWeek(logs) {
+  const now = new Date();
+  const weekAgo = new Date();
+  weekAgo.setDate(now.getDate() - 7);
+
+  const weekLogs = logs.filter(log =>
+    new Date(log.created_at) >= weekAgo
+  );
+
+  document.getElementById("entries").innerText = weekLogs.length;
+}
+
+
+
+
+// 🔥 CURRENT STREAK
+function updateStreak(logs) {
+  const dates = logs
+    .map(log => new Date(log.created_at).toDateString())
+    .filter(Boolean);
+
+  const sorted = [...new Set(dates)]
+    .sort((a, b) => new Date(b) - new Date(a));
+
+  let streak = 1;
+
+  for (let i = 1; i < sorted.length; i++) {
+    const prev = new Date(sorted[i - 1]);
+    const curr = new Date(sorted[i]);
+
+    const diff = (prev - curr) / (1000 * 60 * 60 * 24);
+
+    if (diff === 1) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+
+  document.getElementById("streak").innerText = streak + " days";
+}
+function moodScore(mood) {
+  if (!mood) return 3; // neutral fallback
+
+  const map = {
+    happy: 5,
+    calm: 4,
+    motivated: 4,
+    hopeful: 4,
+    neutral: 3,
+    sad: 2,
+    tired: 2,
+    stressed: 1,
+    anxious: 1,
+    angry: 1
+  };
+
+  return map[mood.toLowerCase()] || 3;
+}
+
+function updateTrend(logs) {
+  // Not enough data → default to improving or stable
+  if (logs.length < 3) {
+    document.getElementById("trend").innerText = "Improving";
+    document.getElementById("progress").style.width = "70%";
+    return;
+  }
+
+  const recent = logs.slice(0, 5);
+  const scores = recent.map(log =>
+    moodScore(log.user_selected_mood || log.mood_category)
+  );
+
+  // If missing values → stable
+  if (scores.some(s => isNaN(s))) {
+    document.getElementById("trend").innerText = "Stable";
+    document.getElementById("progress").style.width = "50%";
+    return;
+  }
+
+  const avgFirstHalf = (scores[0] + scores[1]) / 2;
+  const avgSecondHalf = (scores[scores.length - 1] + scores[scores.length - 2]) / 2;
+
+  let trend = "Stable";
+  if (avgSecondHalf > avgFirstHalf) trend = "Improving";
+  if (avgSecondHalf < avgFirstHalf) trend = "Declining";
+
+  document.getElementById("trend").innerText = trend;
+
+  const progress = Math.max(0, Math.min(100, (avgSecondHalf - avgFirstHalf + 1) * 50));
+  document.getElementById("progress").style.width = progress + "%";
+}
+//Mood HeatMAP
+function renderHeatmap(logs) {
+  const grid = document.getElementById("moodHeatmap");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+
+  const totalCells = 35; // 5 weeks × 7 days
+
+  for (let i = 0; i < totalCells; i++) {
+    const log = logs[i];
+    const mood = log
+      ? (log.user_selected_mood || log.mood_category || "unknown").toLowerCase()
+      : "unknown";
+
+    const color = moodColors[mood] || moodColors.unknown;
+
+    const cell = document.createElement("div");
+    cell.classList.add("heatmap-cell");
+    cell.style.backgroundColor = color;
+
+    grid.appendChild(cell);
+  }
+}
+
 document.getElementById("newEntryBtn").onclick = () => {
   window.location.href = "mood-input-base.html";
 };

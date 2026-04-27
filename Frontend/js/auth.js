@@ -16,8 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 const data = await loginUser(email, password);
 
                 const userId = typeof data === "object" ? data.user_id : data;
+                const username = data.username || email.split("@")[0];
 
                 localStorage.setItem("user_id", userId);
+                localStorage.setItem("user_name", username);
 
                 window.location.href = "mood-input-base.html";
 
@@ -50,9 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 console.log("SIGNUP RESPONSE:", res);
 
+                window.location.href = "login-page.html";
                 alert("Account created successfully!");
 
-                window.location.href = "lgn-page.html";
 
             } catch (err) {
                 console.error(err);
@@ -66,4 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
 // ================= GET USER =================
 export function getUser() {
     return localStorage.getItem("user_id");
+}
+export function logoutUser() {
+    localStorage.removeItem("user_id");
+    window.location.href = "index.html";
+}
+export function getUsername() {
+    return localStorage.getItem("user_name");
 }
