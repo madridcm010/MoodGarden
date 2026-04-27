@@ -65,15 +65,16 @@ body.dark .auth-card {
 /* Images */
 .images {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, 218px);
   gap: 1.5rem;
-  justify-items: center;
+  justify-content: center;
 }
 
 .images img {
-  width: 100%;
-  max-width: 220px;
-  border-radius: 25px;
+  width: 218px;
+  height: 218px;
+  object-fit: cover;
+  display: block;
 }
 
 /* CTA */

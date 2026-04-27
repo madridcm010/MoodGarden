@@ -1,75 +1,138 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Outfit', sans-serif;
-  background-color: #87ae73;
+  background: linear-gradient(135deg, #8fcf8f, #6aa86a);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: 20px;
+  color: #2d3748;
+  transition: background 0.3s ease;
 }
 
-/* Base dark mode */
+/* Dark mode */
 body.dark {
-  background-color: #1a1a1a;
+  background: linear-gradient(135deg, #1a1a1a, #111);
   color: white;
 }
 
-/* Component dark mode */
-body.dark .card { background-color: #2a2a2a; }
-body.dark button { background-color: #444; color: white; }
-body.dark .navbar { background-color: #222; }
+/* MoodGarden Logo */
+.moodgarden {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+
+  color: #ffffff;
+  text-decoration: none;
+
+  padding: 10px 18px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+
+  transition: all 0.25s ease;
 }
 
+.moodgarden:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Settings container */
 .settings-container {
-  position: relative;
-  width: 90%;
-  max-width: 600px;
-  background: rgba(255,255,255,0.9);
-  padding: 2rem;
-  border-radius: 15px;
+  width: 100%;
+  max-width: 650px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  padding: 2.5rem;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeIn 0.6s ease forwards;
+  margin-top: 80px;
 }
 
 body.dark .settings-container {
-  background: rgba(40,40,40,0.95);
+  background: rgba(40, 40, 40, 0.6);
 }
 
-/* Logo */
-.moodgarden {
-  position: absolute;
-  top: 15px;
-  left: 20px;
-  font-size: 1.5rem;
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Sections */
+/* Section titles */
 .settings-section {
   margin-top: 2rem;
 }
 
 .settings-section h2 {
-  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2f855a;
+  margin-bottom: 0.8rem;
 }
 
+body.dark .settings-section h2 {
+  color: #7ed957;
+}
+
+/* Inputs */
 input {
   width: 100%;
-  padding: 10px;
+  padding: 12px 14px;
   margin-top: 0.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   border: none;
+  background: rgba(255,255,255,0.7);
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
+input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 0 0 2px #2f855a;
+}
+
+body.dark input {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+/* Buttons */
 button {
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 15px;
+  padding: 14px;
   width: 100%;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: #2f855a;
   color: white;
   cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 button:hover {
-  opacity: 0.9;
+  background: #276749;
+  transform: translateY(-3px);
+}
+
+body.dark button {
+  background: #3a9d6f;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

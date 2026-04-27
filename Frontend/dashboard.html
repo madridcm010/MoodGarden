@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>MoodGarden Dashboard</title>
   <link rel="stylesheet" href="dashboard.css" />
 </head>
+
 <body>
 
   <nav class="navbar">
@@ -17,57 +19,35 @@
 
   <main class="dashboard">
 
+    <!-- Welcome -->
     <section class="welcome">
       <h2 id="welcomeText">Welcome back 🌱</h2>
     </section>
 
-    <!-- Mood Summary -->
+    <!-- Today's Mood -->
     <section class="card">
       <h3>Today's Mood</h3>
       <p id="todayMood">Loading...</p>
     </section>
 
+    <!-- MoodPath -->
+    <section class="card moodpath-launch">
+      <h3>MoodPath</h3>
+      <p>Explore various paths to stay in your current mood.</p>
+      <button id="openMoodPath" class="primary-btn">Open MoodPath</button>
+      <div id="moodpath-section"></div>
+    </section>
 
-    
-    <section class="stats-container">
-
-  <div class="stat-card">
-    <div class="stat-icon">😊</div>
-    <h3>Most Common Mood</h3>
-    <p id="mostMood">Happy</p>
-  </div>
-
-  <div class="stat-card">
-    <div class="stat-icon">🔥</div>
-    <h3>Current Streak</h3>
-    <p id="streak">5 days</p>
-  </div>
-
-  <div class="stat-card">
-    <div class="stat-icon">📅</div>
-    <h3>Entries This Week</h3>
-    <p id="entries">7</p>
-  </div>
-
-  <div class="stat-card">
-    <div class="stat-icon">📈</div>
-    <h3>Mood Trend</h3>
-    <p id="trend">Improving</p>
-
-    <div class="progress-bar">
-      <div class="progress" id="progress"></div>
-    </div>
-  </div>
-
-</section>
-
-
-
-    
     <!-- Emotion Analysis -->
     <section class="card">
       <h3>Emotion Analysis</h3>
       <canvas id="emotionChart"></canvas>
+    </section>
+
+    <!-- Heatmap -->
+    <section class="card heatmap-card">
+      <h3>Mood Heatmap</h3>
+      <div id="moodHeatmap" class="heatmap-grid"></div>
     </section>
 
     <!-- Recent Logs -->
@@ -81,11 +61,52 @@
       <h3>Recommendations</h3>
       <ul id="recommendations"></ul>
     </section>
-    
+
+    <!-- New Entry -->
+    <section class="card new-entry-card">
+      <h3>Log a New Mood</h3>
+      <p>Record how you're feeling right now.</p>
+      <button id="newEntryBtn" class="primary-btn">New Mood Entry</button>
+    </section>
+
+    <!-- ⭐ STAT CARDS AT THE BOTTOM -->
+    <section class="stats-container">
+
+      <div class="stat-card">
+        <div class="stat-icon">😊</div>
+        <h3>Most Common Mood</h3>
+        <p id="mostMood">Happy</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <h3>Current Streak</h3>
+        <p id="streak">5 days</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <h3>Entries This Week</h3>
+        <p id="entries">7</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <h3>Mood Trend</h3>
+        <p id="trend">Improving</p>
+
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+
+    </section>
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="module" src="dashboard.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
   <script src="js/theme.js"></script>
 </body>
+
 </html>

@@ -7,63 +7,71 @@
 
 body {
   font-family: 'Outfit', sans-serif;
-  background-color: #87ae73;
+  background: linear-gradient(135deg, #8fcf8f, #6aa86a);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: 20px;
+  color: #2d3748;
+  transition: background 0.3s ease;
 }
-/* Base dark mode */
+
+/* Dark mode */
 body.dark {
-  background-color: #1a1a1a;
+  background: linear-gradient(135deg, #1a1a1a, #111);
   color: white;
 }
 
-/* Component dark mode */
-body.dark .card { background-color: #2a2a2a; }
-body.dark button { background-color: #444; color: white; }
-body.dark .navbar { background-color: #222; }
-}
+/* MoodGarden Logo */
 .moodgarden {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 25px;
+  left: 25px;
 
-  color: #fafaf7;
   font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -1px;
+
+  color: #ffffff;
   text-decoration: none;
-  cursor: pointer;
-}
-.moodgarden:hover {
-  opacity: 0.8;
+
+  padding: 10px 18px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+
+  transition: all 0.25s ease;
 }
 
-/* Container */
+.moodgarden:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Main container */
 .mood-input-base {
-  width: 90%;
-  max-width: 1440px;
-  background-color: grey;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  border-radius: 15px;
-  padding: 2rem;
-  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 3rem 2rem;
   text-align: center;
-  opacity: 85%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeIn 0.6s ease forwards;
 }
 
 /* Question text */
 .question {
-  color: #9F6F48;
+  color: #2f855a;
   font-weight: 700;
   font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.4;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
-/* Buttons container */
+/* Mood buttons container */
 .mood-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -75,21 +83,28 @@ body.dark .navbar { background-color: #222; }
 .mood-button {
   width: 150px;
   height: 150px;
-  background: rgba(250, 250, 247, 0.5);
+  background: rgba(255, 255, 255, 0.55);
   border-radius: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* Hover effect */
 .mood-button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Selected mood */
+.mood-button.selected {
+  border: 3px solid #2f855a;
+  background-color: rgba(230, 244, 234, 0.9);
+  transform: scale(1.07);
 }
 
 /* Emoji */
@@ -99,20 +114,59 @@ body.dark .navbar { background-color: #222; }
 
 /* Label */
 .label {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: 1.3rem;
   font-weight: 700;
-  color: #FAFAF7;
-  text-align: center;
+  color: #2d3748;
 }
 
-/* Responsive adjustments */
+/* Continue button */
+#nextBtn {
+  margin-top: 2rem;
+  padding: 14px 24px;
+  background: #2f855a;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+#nextBtn:hover {
+  background: #276749;
+  transform: translateY(-3px);
+}
+
+/* Dark mode adjustments */
+body.dark .mood-input-base {
+  background: rgba(40, 40, 40, 0.6);
+}
+
+body.dark .mood-button {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark .label {
+  color: white;
+}
+
+body.dark #nextBtn {
+  background: #3a9d6f;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .mood-button {
     width: 120px;
     height: 120px;
-  }
-  .emoji {
-    font-size: 2.5rem;
   }
 }
 
@@ -121,16 +175,4 @@ body.dark .navbar { background-color: #222; }
     width: 100px;
     height: 100px;
   }
-  .emoji {
-    font-size: 2rem;
-  }
-  .label {
-    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-  }
-}
-/* Selected mood state */
-.mood-button.selected {
-  border: 3px solid #2f855a;
-  background-color: rgba(230, 244, 234, 0.8);
-  transform: scale(1.05);
 }

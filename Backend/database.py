@@ -1,7 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+DB_PATH = r"C:\Users\Christian\Documents\moodgarden\MoodGarden\moodgarden.db"
 
-DATABASE_URL = "sqlite:///./users.db"
+
+
+DATABASE_URL = "sqlite:///./moodgarden.db"
 
 engine = create_engine(
     DATABASE_URL,

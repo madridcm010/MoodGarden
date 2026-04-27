@@ -17,6 +17,7 @@ router = APIRouter(prefix="/ai", tags=["AI"])
 class AnalyzeRequest(BaseModel):
     user_id: str
     text: str
+    user_selected_mood: str | None = None 
 
 
 class AnalyzeResponse(BaseModel):
@@ -47,7 +48,7 @@ def analyze(request: AnalyzeRequest):
     if not request.text.strip():
         raise HTTPException(status_code=400, detail="Text cannot be empty.")
 
-    result = analyze_mood_text(request.user_id, request.text)
+    result = analyze_mood_text(request.user_id, request.text, request.user_selected_mood)
 
     return AnalyzeResponse(
         result_id=result["result_id"],

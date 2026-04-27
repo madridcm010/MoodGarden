@@ -1,28 +1,27 @@
+/* ============================
+   GLOBAL
+============================ */
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: #f4f9f4;
+  color: #2d3748;
 }
+
 body.dark {
   background-color: #1a1a1a;
   color: white;
 }
-body.dark .card {
-  background-color: #2a2a2a;
-}
 
-body.dark button {
-  background-color: #444;
-  color: white;
-}
-
-body.dark .navbar {
-  background-color: #222;
-}
+/* ============================
+   NAVBAR
+============================ */
 
 .navbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem 2rem;
   background: #2f855a;
   color: white;
@@ -36,24 +35,52 @@ body.dark .navbar {
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
 }
+
+body.dark .navbar {
+  background-color: #222;
+}
+
+body.dark .navbar button {
+  background-color: #444;
+  color: white;
+}
+
+/* ============================
+   DASHBOARD GRID
+============================ */
 
 .dashboard {
   padding: 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 25px;
 }
+
+.welcome {
+  grid-column: 1 / -1;
+}
+
+/* ============================
+   CARD
+============================ */
 
 .card {
   background: white;
   padding: 1.5rem;
   border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s ease;
 }
 
-.welcome {
-  grid-column: 1 / -1;
+.card:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+body.dark .card {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 10px rgba(255,255,255,0.05);
 }
 
 /* =========================
@@ -62,44 +89,56 @@ body.dark .navbar {
 
 .stats-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
   margin: 20px 0;
+  width: 100%;
 }
 
 .stat-card {
   background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-align: center;
+  min-height: 160px;
 }
 
 .stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.15);
 }
 
 .stat-icon {
-  font-size: 28px;
+  font-size: 32px;
   margin-bottom: 10px;
 }
 
 .stat-card h3 {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 5px;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .stat-card p {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: bold;
   color: #333;
 }
 
-/* progress bar */
+/* Dark mode stat cards */
+body.dark .stat-card {
+  background: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
 
+body.dark .stat-card h3,
+body.dark .stat-card p,
+body.dark .stat-icon {
+  color: #e2e8f0;
+}
+
+/* Progress bar */
 .progress-bar {
   width: 100%;
   height: 8px;
@@ -117,19 +156,73 @@ body.dark .navbar {
   transition: width 1s ease;
 }
 
-/* animation */
-
-.stat-card {
-  animation: fadeUp 0.5s ease forwards;
+body.dark .progress-bar {
+  background: #3a3a3a;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+body.dark .progress {
+  background: linear-gradient(to right, #48bb78, #4299e1);
+  box-shadow: 0 0 8px rgba(72, 187, 120, 0.4);
+}
+
+/* ============================
+   MOODPATH BUTTON
+============================ */
+
+.moodpath-launch button,
+.new-entry-card button {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #2f855a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.moodpath-launch button:hover,
+.new-entry-card button:hover {
+  background: #276749;
+}
+
+body.dark .moodpath-launch button,
+body.dark .new-entry-card button {
+  background: #3a9d6f;
+}
+
+/* ============================
+   HEATMAP
+============================ */
+
+.heatmap-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 15px;
+  width: 100%;
+  max-width: 420px;
+  min-height: 300px;
+}
+
+.heatmap-cell {
+  width: 100%;
+  padding-bottom: 100%;
+  border-radius: 6px;
+  background: #e2e8f0;
+  transition: transform 0.2s ease;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.1);
+}
+
+body.dark .heatmap-cell {
+  background: #2d3748;
 }
