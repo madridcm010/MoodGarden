@@ -557,7 +557,9 @@ def analyze_mood_text(user_id: str, text: str, user_selected_mood: str = None) -
         confidence = round(float(probabilities[predicted_index]), 3)
         fallback_used = True
 
-    if confidence < 0.25:
+    if confidence < 0.55:
+        mood_category = "neutral"
+        confidence = 0.50
         fallback_used = True
 
     sentiment = normalize_sentiment(mood_category)
