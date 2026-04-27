@@ -4,7 +4,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await fetchMoodLogs();
     const logs = Array.isArray(data) ? data : data.results || [];
 
-    const mood = logs[0]?.mood_category || "unknown";
+    // ⭐ Sort newest → oldest
+    logs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+    // ⭐ Use user-selected mood first, fallback to AI mood
+    const mood = logs[0]?.user_selected_mood || logs[0]?.mood_category || "unknown";
+
     document.getElementById("moodText").innerText =
         `You are currently feeling: ${mood}`;
 
@@ -12,15 +17,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function loadPaths(mood) {
-    const exercises = getExercisePath(mood);
-    const hobbies = getHobbyPath(mood);
-
     document.getElementById("exerciseList").innerHTML =
-        exercises.map(step => `<li>${step}</li>`).join("");
+        getExercisePath(mood).map(step => `<li>${step}</li>`).join("");
 
     document.getElementById("hobbyList").innerHTML =
-        hobbies.map(step => `<li>${step}</li>`).join("");
+        getHobbyPath(mood).map(step => `<li>${step}</li>`).join("");
+
+    document.getElementById("mindfulnessList").innerHTML =
+        getMindfulnessPath(mood).map(step => `<li>${step}</li>`).join("");
+
+    document.getElementById("socialList").innerHTML =
+        getSocialPath(mood).map(step => `<li>${step}</li>`).join("");
 }
+
+/* =========================
+   PATH GENERATORS
+========================= */
 
 function getExercisePath(mood) {
     switch (mood.toLowerCase()) {
@@ -49,5 +61,35 @@ function getHobbyPath(mood) {
             return ["Write feelings", "Rhythm game", "Intense music"];
         default:
             return ["Journal 5 minutes", "Listen to music", "Small creative task"];
+    }
+}
+
+function getMindfulnessPath(mood) {
+    switch (mood.toLowerCase()) {
+        case "happy":
+            return ["Gratitude journaling", "5-min meditation", "Mindful breathing"];
+        case "calm":
+            return ["Body scan meditation", "Deep breathing", "Mindful tea ritual"];
+        case "sad":
+            return ["Grounding exercise", "Affirmations", "Slow breathing"];
+        case "angry":
+            return ["Cooling breath", "Mindful pause", "Write out emotions"];
+        default:
+            return ["5-min breathing", "Short meditation", "Mindful awareness"];
+    }
+}
+
+function getSocialPath(mood) {
+    switch (mood.toLowerCase()) {
+        case "happy":
+            return ["Share good news with a friend", "Send a meme", "Call someone you like"];
+        case "calm":
+            return ["Chat with a close friend", "Send a thoughtful message", "Spend time with someone"];
+        case "sad":
+            return ["Reach out for support", "Talk to someone you trust", "Join a group chat"];
+        case "angry":
+            return ["Vent safely to a friend", "Ask for space respectfully", "Talk after cooling down"];
+        default:
+            return ["Message a friend", "Join a conversation", "Share something meaningful"];
     }
 }

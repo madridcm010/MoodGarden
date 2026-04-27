@@ -35,6 +35,11 @@ body.dark {
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #e6e6e6;
 }
 
 body.dark .back-btn {
@@ -42,12 +47,16 @@ body.dark .back-btn {
   color: white;
 }
 
+body.dark .back-btn:hover {
+  background: #555;
+}
+
 /* ============================
    PAGE LAYOUT
 ============================ */
 
 .moodpath-container {
-  max-width: 700px;
+  max-width: 900px;
   margin: 2rem auto;
   padding: 0 1rem;
   display: flex;
@@ -55,32 +64,89 @@ body.dark .back-btn {
   gap: 25px;
 }
 
+.mood-header {
+  text-align: center;
+}
+
 /* ============================
-   CARD
+   2×2 GRID
+============================ */
+
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+@media (max-width: 700px) {
+  .path-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================
+   MODERN CARD STYLE
 ============================ */
 
 .card {
-  background: white;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
   padding: 1.5rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+  cursor: pointer;
 }
 
+/* Hover effect */
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Dark mode */
 body.dark .card {
-  background-color: #2a2a2a;
-  box-shadow: 0 4px 10px rgba(255,255,255,0.05);
+  background: rgba(40, 40, 40, 0.85);
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
 }
 
+body.dark .card:hover {
+  background: rgba(55, 55, 55, 0.95);
+  box-shadow: 0 10px 22px rgba(255,255,255,0.12);
+}
+
+/* Titles */
 .card h3 {
   margin-top: 0;
   color: #2f855a;
-}
-
-.card ul {
-  padding-left: 20px;
-  line-height: 1.6;
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
 body.dark .card h3 {
+  color: #9ae6b4;
+}
+
+/* List styling */
+.card ul {
+  padding-left: 20px;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+.card ul li {
+  margin-bottom: 6px;
+  transition: color 0.2s ease;
+}
+
+.card:hover ul li {
+  color: #2f855a;
+}
+
+body.dark .card:hover ul li {
   color: #9ae6b4;
 }

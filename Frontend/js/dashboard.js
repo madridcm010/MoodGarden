@@ -2,40 +2,42 @@ import { getUser } from './auth.js';
 import { fetchMoodLogs, fetchRecommendations } from './api.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const userId = getUser();
+  const userId = getUser();
 
-    if (!userId) {
-        window.location.href = "login-page.html";
-        return;
-    }
+  if (!userId) {
+    window.location.href = "login-page.html";
+    return;
+  }
 
-    document.getElementById("welcomeText").innerText =
-        `Welcome back 🌱 (User ${userId})`;
+  document.getElementById("welcomeText").innerText =
+    `Welcome back 🌱 (User ${userId})`;
 
-    loadDashboard(userId);
+  loadDashboard(userId);
 });
 
 async function loadDashboard(userId) {
-    try {
-        const data = await fetchMoodLogs();
-        const logs = Array.isArray(data)
-            ? data
-            : data.results || data.moods || [];
+  try {
+    const data = await fetchMoodLogs();
+    const logs = Array.isArray(data)
+      ? data
+      : data.results || data.moods || [];
 
-        displayTodayMood(logs);
-        displayRecentLogs(logs);
+    logs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    displayTodayMood(logs);
+    displayRecentLogs(logs);
 
-        const recs = await fetchRecommendations(userId);
-        displayRecommendations(recs);
+    renderChart(logs); // ← ADD THIS
 
-        // ⭐ NEW: MoodPath
-        const currentMood = logs[0]?.mood_category || null;
-        renderMoodPath(currentMood);
+    const recs = await fetchRecommendations(userId);
+    displayRecommendations(recs);
 
-    } catch (err) {
-        console.error("DASHBOARD ERROR:", err);
-        renderMoodPath(null);
-    }
+    const currentMood = logs[0]?.user_selected_mood || logs[0]?.mood_category || null;
+    renderMoodPath(currentMood);
+
+  } catch (err) {
+    console.error("DASHBOARD ERROR:", err);
+    renderMoodPath(null);
+  }
 }
 
 /* =========================
@@ -43,20 +45,20 @@ async function loadDashboard(userId) {
 ========================= */
 
 function renderMoodPath(mood) {
-    const container = document.getElementById("moodpath-section");
+  const container = document.getElementById("moodpath-section");
 
-    if (!mood) {
-        container.innerHTML = `
+  if (!mood) {
+    container.innerHTML = `
             <p>No mood logged today.</p>
             <p>Log a mood to get a personalized path.</p>
         `;
-        return;
-    }
+    return;
+  }
 
-    const exercises = getExercisePath(mood);
-    const hobbies = getHobbyPath(mood);
+  const exercises = getExercisePath(mood);
+  const hobbies = getHobbyPath(mood);
 
-    container.innerHTML = `
+  container.innerHTML = `
         <p>You are currently feeling <strong>${mood}</strong>.</p>
         <p>Choose a path to stay in this mood:</p>
 
@@ -79,14 +81,14 @@ function renderMoodPath(mood) {
         </div>
     `;
 
-    // Add click handlers
-    document.getElementById("exercisePath").onclick = () => {
-        alert("You selected the Exercise Path. Great choice!");
-    };
+  // Add click handlers
+  document.getElementById("exercisePath").onclick = () => {
+    alert("You selected the Exercise Path. Great choice!");
+  };
 
-    document.getElementById("hobbyPath").onclick = () => {
-        alert("You selected the Hobby Path. Enjoy your time!");
-    };
+  document.getElementById("hobbyPath").onclick = () => {
+    alert("You selected the Hobby Path. Enjoy your time!");
+  };
 }
 
 /* =========================
@@ -94,33 +96,33 @@ function renderMoodPath(mood) {
 ========================= */
 
 function getExercisePath(mood) {
-    switch (mood.toLowerCase()) {
-        case "happy":
-            return ["Go for a light jog", "Stretch for 5 minutes", "Dance to a favorite song"];
-        case "calm":
-            return ["10-minute yoga flow", "Deep breathing exercises", "Slow walk outside"];
-        case "sad":
-            return ["Short walk", "Gentle stretching", "5-minute breathing reset"];
-        case "angry":
-            return ["Fast-paced walk", "Punch pillow exercise", "Deep breathing cooldown"];
-        default:
-            return ["Walk for 5 minutes", "Stretch your arms", "Take 10 deep breaths"];
-    }
+  switch (mood.toLowerCase()) {
+    case "happy":
+      return ["Go for a light jog", "Stretch for 5 minutes", "Dance to a favorite song"];
+    case "calm":
+      return ["10-minute yoga flow", "Deep breathing exercises", "Slow walk outside"];
+    case "sad":
+      return ["Short walk", "Gentle stretching", "5-minute breathing reset"];
+    case "angry":
+      return ["Fast-paced walk", "Punch pillow exercise", "Deep breathing cooldown"];
+    default:
+      return ["Walk for 5 minutes", "Stretch your arms", "Take 10 deep breaths"];
+  }
 }
 
 function getHobbyPath(mood) {
-    switch (mood.toLowerCase()) {
-        case "happy":
-            return ["Draw something fun", "Play a game", "Listen to upbeat music"];
-        case "calm":
-            return ["Read a book", "Make tea", "Listen to soft music"];
-        case "sad":
-            return ["Write your thoughts", "Watch comfort show", "Listen to gentle music"];
-        case "angry":
-            return ["Write out your feelings", "Play a rhythm game", "Listen to intense music"];
-        default:
-            return ["Journal for 5 minutes", "Listen to music", "Do a small creative task"];
-    }
+  switch (mood.toLowerCase()) {
+    case "happy":
+      return ["Draw something fun", "Play a game", "Listen to upbeat music"];
+    case "calm":
+      return ["Read a book", "Make tea", "Listen to soft music"];
+    case "sad":
+      return ["Write your thoughts", "Watch comfort show", "Listen to gentle music"];
+    case "angry":
+      return ["Write out your feelings", "Play a rhythm game", "Listen to intense music"];
+    default:
+      return ["Journal for 5 minutes", "Listen to music", "Do a small creative task"];
+  }
 }
 
 /* =========================
@@ -128,55 +130,108 @@ function getHobbyPath(mood) {
 ========================= */
 
 function displayTodayMood(logs) {
-    const todayLog = logs[0];
-    document.getElementById("todayMood").innerText =
-        todayLog
-            ? `${todayLog.mood_category} (${todayLog.cleaned_text})`
-            : "No mood logged today";
+  const todayLog = logs[0];
+  document.getElementById("todayMood").innerText =
+    todayLog
+      ? `${todayLog.user_selected_mood || todayLog.mood_category} (${todayLog.cleaned_text})`
+      : "No mood logged today";
 }
 
 function displayRecentLogs(logs) {
-    const list = document.getElementById("recentLogs");
-    list.innerHTML = "";
+  const list = document.getElementById("recentLogs");
+  list.innerHTML = "";
 
-    logs.slice(0, 5).forEach(log => {
-        const li = document.createElement("li");
-        li.textContent = `${log.mood_category}: ${log.cleaned_text}`;
-        list.appendChild(li);
-    });
+  logs.slice(0, 5).forEach(log => {
+    const li = document.createElement("li");
+    li.textContent = `${log.user_selected_mood || log.mood_category}: ${log.cleaned_text}`;
+    list.appendChild(li);
+  });
 }
 
 function displayRecommendations(data) {
-    const list = document.getElementById("recommendations");
-    list.innerHTML = "";
+  const list = document.getElementById("recommendations");
+  list.innerHTML = "";
 
-    const emotion = data.most_common_emotion;
-    const total = data.total_entries;
+  const emotion = data.most_common_emotion;
+  const total = data.total_entries;
 
-    const recommendations = [
-        `You logged ${total} moods`,
-        `Your most common emotion is: ${emotion}`,
-        `Recent trend: ${
-            emotion === "neutral"
-                ? "Try adding more emotional detail"
-                : "Good emotional awareness!"
-        }`
-    ];
+  const recommendations = [
+    `You logged ${total} moods`,
+    `Your most common emotion is: ${emotion}`,
+    `Recent trend: ${emotion === "neutral"
+      ? "Try adding more emotional detail"
+      : "Good emotional awareness!"
+    }`
+  ];
 
-    recommendations.forEach(text => {
-        const li = document.createElement("li");
-        li.textContent = text;
-        list.appendChild(li);
-    });
+  recommendations.forEach(text => {
+    const li = document.createElement("li");
+    li.textContent = text;
+    list.appendChild(li);
+  });
 }
+/* =========================
+   EMOTION ANALYSIS CHART
+========================= */
+
+let emotionChartInstance = null;
+
+function renderChart(logs) {
+  const ctx = document.getElementById("emotionChart");
+
+  if (!ctx) {
+    console.error("Emotion chart canvas not found");
+    return;
+  }
+
+  if (!logs || logs.length === 0) {
+    console.warn("No logs available for chart");
+    return;
+  }
+
+  // Count moods
+  const moodCounts = {};
+  logs.forEach(log => {
+    const mood = log.user_selected_mood || log.mood_category || "unknown";
+    moodCounts[mood] = (moodCounts[mood] || 0) + 1;
+  });
+
+  // Destroy old chart if it exists
+  if (emotionChartInstance) {
+    emotionChartInstance.destroy();
+  }
+
+  emotionChartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: Object.keys(moodCounts),
+      datasets: [{
+        data: Object.values(moodCounts),
+        backgroundColor: [
+          '#7ed957', '#4facfe', '#f6a623',
+          '#e05252', '#a8d8a8', '#f9ca24'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+}
+document.getElementById("newEntryBtn").onclick = () => {
+  window.location.href = "mood-input-base.html";
+};
 document.getElementById("openMoodPath").onclick = () => {
-    window.location.href = "moodpath.html";
+  window.location.href = "moodpath.html";
 };
 document.getElementById("settingsBtn").onclick = () => {
-    window.location.href = "settings.html";
+  window.location.href = "settings.html";
 };
 
 document.getElementById("logoutBtn").onclick = () => {
-    localStorage.removeItem("user_id");
-    window.location.href = "login-page.html";
+  localStorage.removeItem("user_id");
+  window.location.href = "login-page.html";
 };

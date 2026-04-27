@@ -105,3 +105,21 @@ body.dark .card {
 body.dark .moodpath-launch button {
   background: #3a9d6f;
 }
+.new-entry-card button {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #2f855a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.new-entry-card button:hover {
+  background: #276749;
+}
+
+body.dark .new-entry-card button {
+  background: #3a9d6f;
+}

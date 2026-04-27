@@ -344,8 +344,9 @@ def save_result_to_db(result_data: Dict[str, Any]) -> int:
             supportive_reflection,
             recommendation,
             fallback_used,
-            processing_time_ms
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            processing_time_ms,
+            user_selected_mood
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         result_data["user_id"],
         result_data["original_text"],
@@ -358,14 +359,14 @@ def save_result_to_db(result_data: Dict[str, Any]) -> int:
         result_data["supportive_reflection"],
         result_data["recommendation"],
         1 if result_data["fallback_used"] else 0,
-        result_data["processing_time_ms"]
+        result_data["processing_time_ms"],
+        result_data.get("user_selected_mood")  # ⭐ SAFE ACCESS
     ))
 
     result_id = cursor.lastrowid
     conn.commit()
     conn.close()
     return result_id
-
 
 def get_result_by_id(result_id: int) -> Optional[Dict[str, Any]]:
     init_db()
@@ -512,7 +513,8 @@ def save_feedback(result_id: int, user_id: str, helpful: Optional[bool] = None, 
         add_training_example(result["cleaned_text"], correct_label.strip().lower())
 
 
-def analyze_mood_text(user_id: str, text: str) -> Dict[str, Any]:
+def analyze_mood_text(user_id: str, text: str, user_selected_mood: str = None) -> Dict[str, Any]:
+
     from .recommender import get_reflections
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -555,9 +557,7 @@ def analyze_mood_text(user_id: str, text: str) -> Dict[str, Any]:
         confidence = round(float(probabilities[predicted_index]), 3)
         fallback_used = True
 
-    if confidence < 0.55:
-        mood_category = "neutral"
-        confidence = 0.50
+    if confidence < 0.25:
         fallback_used = True
 
     sentiment = normalize_sentiment(mood_category)
@@ -566,19 +566,20 @@ def analyze_mood_text(user_id: str, text: str) -> Dict[str, Any]:
     recommendation = choose_personalized_recommendation(user_id, mood_category)
 
     response = {
-        "user_id": user_id,
-        "original_text": text,
-        "cleaned_text": cleaned,
-        "sentiment": sentiment,
-        "mood_category": mood_category,
-        "emotional_tone": emotional_tone,
-        "confidence": confidence,
-        "short_reflection": reflections["short_reflection"],
-        "supportive_reflection": reflections["supportive_reflection"],
-        "recommendation": recommendation,
-        "fallback_used": fallback_used,
-        "processing_time_ms": round((time.perf_counter() - start_time) * 1000, 2)
-    }
+    "user_id": user_id,
+    "original_text": text,
+    "cleaned_text": cleaned,
+    "sentiment": sentiment,
+    "mood_category": mood_category,
+    "emotional_tone": emotional_tone,
+    "confidence": confidence,
+    "short_reflection": reflections["short_reflection"],
+    "supportive_reflection": reflections["supportive_reflection"],
+    "recommendation": recommendation,
+    "fallback_used": fallback_used,
+    "processing_time_ms": round((time.perf_counter() - start_time) * 1000, 2),
+    "user_selected_mood": user_selected_mood  # ⭐ NEW
+}
 
     result_id = save_result_to_db(response)
     response["result_id"] = result_id

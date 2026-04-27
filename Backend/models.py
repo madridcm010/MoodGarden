@@ -36,6 +36,7 @@ class Result(Base):
     recommendation = Column(String)
     fallback_used = Column(Boolean)
     processing_time_ms = Column(Float)
+    user_selected_mood = Column(String)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 
