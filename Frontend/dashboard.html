@@ -27,6 +27,42 @@
       <p id="todayMood">Loading...</p>
     </section>
 
+    <section class="stats-container">
+      <div class="stat-card">
+        <div class="stat-icon">😊</div>
+        <h3>Most Common Mood</h3>
+        <p id="mostMood">Happy</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <h3>Current Streak</h3>
+        <p id="streak">5 days</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <h3>Entries This Week</h3>
+        <p id="entries">7</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <h3>Mood Trend</h3>
+        <p id="trend">Improving</p>
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MoodPath Section -->
+    <section class="card moodpath-card">
+      <div id="moodpath-section">
+        <div class="moodpath-loading">Loading your path...</div>
+      </div>
+    </section>
+
     <!-- Emotion Analysis -->
     <section class="card">
       <h3>Emotion Analysis</h3>
@@ -47,7 +83,7 @@
 
   </main>
 
-  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module" src="js/dashboard.js"></script>
   <script src="js/theme.js"></script>
 </body>
