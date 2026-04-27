@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MoodPath</title>
+  <link rel="stylesheet" href="moodpath.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <h1>🌿 MoodPath</h1>
+    <button class="back-btn" onclick="window.location.href='dashboard.html'">← Back</button>
+  </nav>
+
+  <main class="moodpath-container">
+
+    <section class="card">
+      <h2>Your MoodPath</h2>
+      <p id="moodText">Loading mood...</p>
+    </section>
+
+    <section class="card">
+      <h3>Exercise Path 🏃‍♂️</h3>
+      <ul id="exerciseList"></ul>
+    </section>
+
+    <section class="card">
+      <h3>Hobby Path 🎨</h3>
+      <ul id="hobbyList"></ul>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/moodpath.js"></script>
+</body>
+</html>

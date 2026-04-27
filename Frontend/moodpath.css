@@ -27,8 +27,7 @@ body.dark {
   color: white;
 }
 
-.navbar button {
-  margin-left: 10px;
+.back-btn {
   background: white;
   color: #2f855a;
   border: none;
@@ -38,28 +37,22 @@ body.dark {
   font-weight: 600;
 }
 
-body.dark .navbar {
-  background-color: #222;
-}
-
-body.dark .navbar button {
-  background-color: #444;
+body.dark .back-btn {
+  background: #444;
   color: white;
 }
 
 /* ============================
-   DASHBOARD GRID
+   PAGE LAYOUT
 ============================ */
 
-.dashboard {
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+.moodpath-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
   gap: 25px;
-}
-
-.welcome {
-  grid-column: 1 / -1;
 }
 
 /* ============================
@@ -71,11 +64,6 @@ body.dark .navbar button {
   padding: 1.5rem;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: box-shadow 0.2s ease;
-}
-
-.card:hover {
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 }
 
 body.dark .card {
@@ -83,25 +71,16 @@ body.dark .card {
   box-shadow: 0 4px 10px rgba(255,255,255,0.05);
 }
 
-/* ============================
-   MOODPATH BUTTON
-============================ */
-
-.moodpath-launch button {
-  margin-top: 10px;
-  padding: 10px 14px;
-  background: #2f855a;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
+.card h3 {
+  margin-top: 0;
+  color: #2f855a;
 }
 
-.moodpath-launch button:hover {
-  background: #276749;
+.card ul {
+  padding-left: 20px;
+  line-height: 1.6;
 }
 
-body.dark .moodpath-launch button {
-  background: #3a9d6f;
+body.dark .card h3 {
+  color: #9ae6b4;
 }

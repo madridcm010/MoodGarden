@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>MoodGarden Dashboard</title>
   <link rel="stylesheet" href="dashboard.css" />
 </head>
+
 <body>
 
   <nav class="navbar">
@@ -25,6 +27,13 @@
     <section class="card">
       <h3>Today's Mood</h3>
       <p id="todayMood">Loading...</p>
+    </section>
+
+    <!-- MoodPath Section -->
+    <section class="card moodpath-launch">
+      <h3>MoodPath</h3>
+      <p>Explore exercises and hobbies to stay in your current mood.</p>
+      <button id="openMoodPath" class="primary-btn">Open MoodPath</button>
     </section>
 
     <!-- Emotion Analysis -->
@@ -51,4 +60,5 @@
   <script type="module" src="js/dashboard.js"></script>
   <script src="js/theme.js"></script>
 </body>
+
 </html>
