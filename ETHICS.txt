@@ -1,0 +1,76 @@
+1. Legal Considerations
+MoodGarden aligns with widely recognized legal standards for software that processes personal data:
+
+Data Privacy & Protection
+The app avoids collecting unnecessary personal information, following data minimization principles found in laws like GDPR and CCPA.
+
+User mood logs, journaling entries, and MoodPath progress are treated as sensitive data and stored securely.
+
+Passwords are hashed and salted using industry‑standard methods (e.g., SHA‑256 or bcrypt), preventing exposure even if the database is compromised.
+
+User Consent
+Users explicitly choose to log moods, write journal entries, or engage in MoodPaths.
+
+No data is collected automatically without user action.
+
+The system avoids dark patterns and ensures users understand what features do before interacting with them.
+
+No Sharing of Personal Data
+MoodGarden does not share, sell, or transmit user data to third parties.
+
+All processing occurs within the app’s backend and is limited to the user’s own account.
+
+2. Ethical Considerations
+MoodGarden’s design follows ethical guidelines for technology that interacts with mental‑health‑related content.
+
+Respect for User Autonomy
+Users control their own data: they choose when to log moods, what to write, and which MoodPath to follow.
+
+The app avoids manipulative nudges; instead, it offers gentle, optional guidance.
+
+Non‑Harm Principle
+MoodGarden does not attempt to diagnose, treat, or replace mental‑health professionals.
+
+All language in the UI is supportive, non‑clinical, and non‑judgmental.
+
+MoodPaths focus on general wellness activities (breathing, grounding, hobbies) rather than medical advice.
+
+Transparency
+Features clearly explain their purpose (e.g., “MoodPath helps you follow small steps to improve your mood”).
+
+No hidden algorithms or opaque scoring systems are used.
+
+Data Ethics
+Only mood‑related data is stored; no biometric, location, or behavioral tracking is used.
+
+Users can view their own history and understand how the app uses their inputs.
+
+3. Professional Considerations
+The project follows professional software engineering standards to ensure reliability, maintainability, and user trust.
+
+Secure Coding Practices
+Backend routes use prepared statements to prevent SQL injection.
+
+Authentication uses hashed passwords and secure session handling.
+
+API endpoints validate input to prevent malformed or malicious data.
+
+User‑Centered Design
+The interface is clean, accessible, and mobile‑friendly.
+
+Color choices and UI elements avoid overwhelming users, supporting emotional comfort.
+
+MoodPath steps are simple, actionable, and designed to reduce cognitive load.
+
+Accessibility
+Text is readable with sufficient contrast.
+
+Buttons and interactive elements are large and keyboard‑navigable.
+
+The design avoids flashing animations or stressful visual patterns.
+
+Professional Documentation & Version Control
+The GitHub repository includes clear commit messages, modular code, and organized file structure.
+
+Features are documented so future developers can understand and extend the system.
+
