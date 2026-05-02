@@ -1,0 +1,70 @@
+Copilot may make mistakes 1
+USER_MANUAL.txt
+USER MANUAL - MOODGARDEN
+1. OVERVIEW
+1.
+MoodGarden is an emotional well-being application that helps users track their moods, reflect
+on their emotional patterns, and receive personalized recommendations. The app includes
+mood logging, journaling, a dashboard with insights, and mood-based guidance.
+1. GETTING STARTED
+1.
+2.1 Creating an Account
+▪ Open the Sign Up page.
+▪ Enter your email, username, and password.
+▪ Submit the form to create your account.
+2.2 Logging In
+▪ Navigate to the Login page.
+▪ Enter your credentials.
+▪ Upon success, you will be redirected to the Dashboard.
+1. MAIN FEATURES
+1.
+3.1 Dashboard The Dashboard displays:
+▪ Your most recent mood
+▪ Recent mood logs
+▪ AI-generated recommendations
+▪ Navigation to Mood Input, Mood Details, and Settings
+3.2 Logging Your Mood
+▪ Select "Log Mood" from the Dashboard.
+▪ Choose your mood category.
+▪ Optionally add a journal entry.
+▪ Submit to save the mood.
+3.3 Viewing Mood Details The Mood Details page shows:
+▪ Full mood history
+Copilot may make mistakes 2
+▪ Individual entries with timestamps
+▪ Journal text for each entry
+3.4 Recommendations The Recommendations page provides:
+▪ Exercises
+▪ Grounding techniques
+▪ Activity suggestions
+▪ Emotional insights
+3.5 Settings The Settings page allows you to:
+▪ Switch between light and dark themes
+▪ Manage account preferences
+1. NAVIGATION STRUCTURE
+1.
+Main pages include:
+▪ index.html (Landing Page)
+▪ login-page.html (Login)
+▪ signup.html (Registration)
+▪ dashboard.html (Main Dashboard)
+▪ mood-input-* (Mood Logging Pages)
+▪ mood-details.html (Mood History)
+▪ reccomendations.html (AI Suggestions)
+▪ settings.html (Preferences)
+1. TROUBLESHOOTING
+1.
+Login Issues:
+▪ Verify credentials.
+▪ Ensure backend server is running.
+Mood Not Saving:
+▪ Check backend API connection.
+▪ Review console logs for errors.
+Dashboard Not Loading:
+▪ Confirm API configuration.
+▪ Ensure session token is valid.
+Copilot may make mistakes 3
+1. SAFETY NOTICE
+1.
+MoodGarden is a self-reflection tool. It does not diagnose or treat mental health conditions.
+END OF USER MANUAL
